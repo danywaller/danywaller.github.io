@@ -1,152 +1,298 @@
 {
   "basics": {
-    "name": "Your Sidebar Name",
-    "email": "none@example.org",
-    "phone": "",
-    "website": "https://academicpages.github.io",
-    "summary": "Currently employed at Red Brick University. Short biography for the left-hand sidebar",
-    "location": {
-      "address": "",
-      "postalCode": "",
-      "city": "Earth",
-      "countryCode": "US",
-      "region": ""
-    },
+    "name": "Dany Waller",
+    "label": "Ph.D. Student in Computational Physics",
+    "email": "dany.c.waller@gmail.com",
+    "url": "https://danywaller.github.io",
     "profiles": [
       {
-        "network": "Google Scholar",
-        "username": "",
-        "url": "https://scholar.google.com/citations?user=PS_CX0AAAAAJ"
-      },
-      {
-        "network": "ORCID",
-        "username": "",
-        "url": "https://orcid.org/yourorcidurl"
-      },
-      {
         "network": "GitHub",
-        "username": "academicpages",
-        "url": "https://github.com/academicpages"
+        "username": "lunarswirls",
+        "url": "https://github.com/lunarswirls"
       }
     ]
   },
-  "work": [],
   "education": [
     {
-      "institution": "GitHub University",
-      "area": "Ph.D in Version Control Theory",
-      "studyType": "",
-      "startDate": "",
-      "endDate": "2018",
-      "gpa": null,
-      "courses": []
+      "institution": "Umeå University",
+      "location": "Umeå, Sweden",
+      "area": "Computational Physics",
+      "studyType": "Ph.D.",
+      "startDate": "2025",
+      "endDate": "",
+      "score": "",
+      "summary": "Ph.D. in Computational Physics"
     },
     {
-      "institution": "GitHub University",
-      "area": "M.S. in Jekyll",
-      "studyType": "",
+      "institution": "Johns Hopkins University",
+      "location": "Baltimore, MD",
+      "area": "Applied Physics (Honors)",
+      "studyType": "M.S.",
       "startDate": "",
-      "endDate": "2014",
-      "gpa": null,
-      "courses": []
+      "endDate": "2022",
+      "score": "",
+      "summary": "M.S. in Applied Physics (Honors)"
     },
     {
-      "institution": "GitHub University",
-      "area": "B.S. in GitHub",
-      "studyType": "",
+      "institution": "University of Kentucky",
+      "location": "Lexington, KY",
+      "area": "Mathematics",
+      "studyType": "B.S.",
       "startDate": "",
-      "endDate": "2012",
-      "gpa": null,
-      "courses": []
+      "endDate": "2019",
+      "score": "",
+      "summary": "B.S. in Mathematics"
+    },
+    {
+      "institution": "University of Kentucky",
+      "location": "Lexington, KY",
+      "area": "Physics",
+      "studyType": "B.A.",
+      "startDate": "",
+      "endDate": "2019",
+      "score": "",
+      "summary": "B.A. in Physics"
     }
   ],
-  "skills": [],
-  "languages": [],
-  "interests": [],
-  "references": [],
+  "work": [
+    {
+      "name": "Umeå University",
+      "position": "Graduate Research Assistant",
+      "location": "Computational Physics Department",
+      "startDate": "2025",
+      "endDate": "",
+      "summary": "Graduate Research Assistant in the Computational Physics Department.",
+      "highlights": []
+    },
+    {
+      "name": "JHU Applied Physics Laboratory",
+      "position": "Associate Professional Staff",
+      "location": "Space Exploration Sector",
+      "startDate": "2021",
+      "endDate": "2025",
+      "summary": "Associate Professional Staff in the Space Exploration Sector.",
+      "highlights": []
+    },
+    {
+      "name": "Science Systems & Applications, Inc.",
+      "position": "Scientific Analyst II",
+      "location": "NASA Goddard Space Flight Center, Geodesy and Geophysics Laboratory (61A)",
+      "startDate": "2020",
+      "endDate": "2021",
+      "summary": "Scientific Analyst II supporting the Geodesy and Geophysics Laboratory (61A) at NASA Goddard Space Flight Center.",
+      "highlights": []
+    }
+  ],
+  "projects": [
+    {
+      "name": "Europa Clipper PIMS Graduate Student Affiliate",
+      "startDate": "2025",
+      "endDate": "",
+      "summary": "Graduate student affiliate for the Plasma Instrument for Magnetic Sounding (PIMS) on Europa Clipper."
+    },
+    {
+      "name": "Lunar Reconnaissance Orbiter (LRO) Mini-RF Team Affiliate",
+      "startDate": "2023",
+      "endDate": "",
+      "summary": "Team affiliate for the Mini-RF radar instrument on NASA’s Lunar Reconnaissance Orbiter."
+    },
+    {
+      "name": "Lunar Vertex Co-Investigator",
+      "startDate": "2022",
+      "endDate": "",
+      "summary": "Co-Investigator for the Lunar Vertex mission."
+    },
+    {
+      "name": "Lunar Reconnaissance Orbiter (LRO) LAMP Team Affiliate",
+      "startDate": "2020",
+      "endDate": "",
+      "summary": "Team affiliate for the Lyman Alpha Mapping Project (LAMP) instrument on LRO."
+    },
+    {
+      "name": "Europa Clipper PIMS Science Operations Team",
+      "startDate": "2024",
+      "endDate": "2025",
+      "summary": "Member of the science operations team for the Plasma Instrument for Magnetic Sounding (PIMS) on Europa Clipper."
+    },
+    {
+      "name": "Lunar Vertex Magnetometer Instrument Scientist",
+      "startDate": "2022",
+      "endDate": "2025",
+      "summary": "Instrument scientist for the Lunar Vertex magnetometer."
+    },
+    {
+      "name": "Double Asteroid Redirection Test (DART) Investigation Team",
+      "startDate": "2021",
+      "endDate": "2023",
+      "summary": "Member of the investigation team for NASA’s DART mission."
+    }
+  ],
+  "awards": [
+    {
+      "title": "Europa Clipper PIMS Special Achievement Award",
+      "date": "2025",
+      "awarder": "JHU Applied Physics Laboratory",
+      "summary": ""
+    },
+    {
+      "title": "Lunar Vertex Special Achievement Award",
+      "date": "2024",
+      "awarder": "JHU Applied Physics Laboratory",
+      "summary": ""
+    },
+    {
+      "title": "DART Special Achievement Award",
+      "date": "2023",
+      "awarder": "JHU Applied Physics Laboratory",
+      "summary": ""
+    },
+    {
+      "title": "2nd place, NESF/ELS Student Poster Competition",
+      "date": "2021",
+      "awarder": "NASA SSERVI",
+      "summary": ""
+    },
+    {
+      "title": "5 Sigma Physicist",
+      "date": "2020",
+      "awarder": "American Physical Society (APS)",
+      "summary": ""
+    },
+    {
+      "title": "Student Impact Award",
+      "date": "2019",
+      "awarder": "Omicron Delta Kappa Nu Circle",
+      "summary": ""
+    },
+    {
+      "title": "Outstanding Senior on UK at the Half",
+      "date": "2019",
+      "awarder": "University of Kentucky",
+      "summary": ""
+    }
+  ],
+  "volunteer": [
+    {
+      "organization": "Asia Oceania Geosciences Society",
+      "position": "Planetary Science Section Secretary",
+      "startDate": "2024",
+      "endDate": "",
+      "summary": "Planetary Science Section Secretary.",
+      "highlights": []
+    },
+    {
+      "organization": "JHU/APL CIRCUIT Program",
+      "position": "Intern Mentor",
+      "startDate": "2022",
+      "endDate": "2024",
+      "summary": "Intern mentor for the CIRCUIT Program at JHU Applied Physics Laboratory.",
+      "highlights": []
+    },
+    {
+      "organization": "NASA Goddard Association of Postdoctoral and Early Career Scholars (NGAPS+)",
+      "position": "Intern Mentor",
+      "startDate": "2020",
+      "endDate": "2021",
+      "summary": "Intern mentor with NGAPS+ at NASA Goddard.",
+      "highlights": []
+    },
+    {
+      "organization": "NASA Science Mission Directorate Bridge Program, GSFC",
+      "position": "Committee Member",
+      "startDate": "2020",
+      "endDate": "2021",
+      "summary": "Committee member for the NASA Science Mission Directorate Bridge Program at GSFC.",
+      "highlights": []
+    },
+    {
+      "organization": "American Physical Society (APS)",
+      "position": "STEM Policy Advocate",
+      "startDate": "2018",
+      "endDate": "2020",
+      "summary": "STEM policy advocate with the American Physical Society.",
+      "highlights": []
+    }
+  ],
   "publications": [
     {
-      "name": "Paper Title Number 1",
-      "publisher": "Journal 1",
-      "releaseDate": "2009-10-01",
-      "website": "https://academicpages.github.io/files/paper1.pdf",
-      "summary": "This paper is about the number 1. The number 2 is left for future work."
-    },
-    {
-      "name": "Paper Title Number 2",
-      "publisher": "Journal 1",
-      "releaseDate": "2010-10-01",
-      "website": "https://academicpages.github.io/files/paper2.pdf",
-      "summary": "This paper is about the number 2. The number 3 is left for future work."
-    },
-    {
-      "name": "Paper Title Number 3",
-      "publisher": "Journal 1",
-      "releaseDate": "2015-10-01",
-      "website": "https://academicpages.github.io/files/paper3.pdf",
-      "summary": "This paper is about the number 3. The number 4 is left for future work."
-    },
-    {
-      "name": "Paper Title Number 4",
-      "publisher": "GitHub Journal of Bugs",
-      "releaseDate": "2024-02-17",
-      "website": "https://academicpages.github.io/files/paper3.pdf",
-      "summary": "This paper is about fixing template issue #693."
-    }
-  ],
-  "presentations": [
-    {
-      "name": "Talk 1 on Relevant Topic in Your Field",
-      "event": "UC San Francisco, Department of Testing",
-      "date": "2012-03-01",
-      "location": "San Francisco, CA, USA",
-      "description": ""
-    },
-    {
-      "name": "Tutorial 1 on Relevant Topic in Your Field",
-      "event": "UC-Berkeley Institute for Testing Science",
-      "date": "2013-03-01",
-      "location": "Berkeley, CA, USA",
-      "description": ""
-    },
-    {
-      "name": "Talk 2 on Relevant Topic in Your Field",
-      "event": "London School of Testing",
-      "date": "2014-02-01",
-      "location": "London, UK",
-      "description": ""
-    },
-    {
-      "name": "Conference Proceeding talk 3 on Relevant Topic in Your Field",
-      "event": "Testing Institute of America 2014 Annual Conference",
-      "date": "2014-03-01",
-      "location": "Los Angeles, CA, USA",
-      "description": ""
-    }
-  ],
-  "teaching": [
-    {
-      "course": "Teaching experience 1",
-      "institution": "University 1, Department",
-      "date": "2014-01-01",
-      "role": "Undergraduate course",
-      "description": ""
-    },
-    {
-      "course": "Teaching experience 2",
-      "institution": "University 1, Department",
-      "date": "2015-01-01",
-      "role": "Workshop",
-      "description": ""
-    }
-  ],
-  "portfolio": [
-    {
-      "name": "Portfolio item number 1",
-      "category": "portfolio",
-      "date": "",
+      "name": "Variation in Lunar Regolith Space Weathering Relative to Latitude and Wavelength",
+      "publisher": "Planetary Science Journal",
+      "releaseDate": "2025",
       "url": "",
-      "description": "Short description of portfolio item number 1<br/><img src='/images/500x300.png'>"
+      "summary": "Waller, C.D., Cahill, J.T.S., Retherford, K.D., et al. (2025, in review). Variation in Lunar Regolith Space Weathering Relative to Latitude and Wavelength. Planetary Science Journal.",
+      "type": "journal"
+    },
+    {
+      "name": "Multi-Wavelength Analysis and Geophysical Characterization of Orientale Impact Basin: Insights into Lunar Surface Composition and Structural Properties",
+      "publisher": "Planetary Science Journal",
+      "releaseDate": "2025",
+      "url": "",
+      "summary": "Waller, C.D., Cahill, J.T.S., Rivera-Valentín, E.G., et al. (2025, in review). Multi-Wavelength Analysis and Geophysical Characterization of Orientale Impact Basin: Insights into Lunar Surface Composition and Structural Properties. Planetary Science Journal.",
+      "type": "journal"
+    },
+    {
+      "name": "The Plasma Instrument for Magnetic Sounding (PIMS) on Europa Clipper: First Light",
+      "publisher": "56th Lunar and Planetary Science Conference",
+      "releaseDate": "2025-03",
+      "url": "",
+      "summary": "Luspay-Kuti, A., Crew, A.B., Waller, D., et al. (2025, March 10–14). The Plasma Instrument for Magnetic Sounding (PIMS) on Europa Clipper: First Light. 56th Lunar and Planetary Science Conference, The Woodlands, TX. Abstract #2314.",
+      "type": "conference"
+    },
+    {
+      "name": "Regional Crustal Characterization Trends in the Western Lunar Limb of Orientale and the Outer Feldspathic Highlands Terrain",
+      "publisher": "56th Lunar and Planetary Science Conference",
+      "releaseDate": "2025-03",
+      "url": "",
+      "summary": "Waller, C.D., Cahill, J.T.S., Fassett, C.I., et al. (2025, March 10–14). Regional Crustal Characterization Trends in the Western Lunar Limb of Orientale and the Outer Feldspathic Highlands Terrain. 56th Lunar and Planetary Science Conference, The Woodlands, TX. Abstract #2618.",
+      "type": "conference"
+    },
+    {
+      "name": "Designing a Network of Environmental Monitoring Stations to Combine Lunar Geophysics and Space Weather Investigations",
+      "publisher": "American Geophysical Union Fall Meeting",
+      "releaseDate": "2024-12",
+      "url": "",
+      "summary": "Waller, C.D., Rorschach, K., Stautberg, A., Cahill, J.T.S., Izquierdo, K., Shea, E. (2024, December 9–13). Designing a Network of Environmental Monitoring Stations to Combine Lunar Geophysics and Space Weather Investigations. American Geophysical Union Fall Meeting, Washington, DC.",
+      "type": "conference"
+    },
+    {
+      "name": "Extended Silicic Volcanism in the Gruithuisen Region—Revisiting the Composition and Thermophysical Properties of Gruithuisen Domes on the Moon",
+      "publisher": "Planetary Science Journal",
+      "releaseDate": "2024",
+      "url": "https://doi.org/10.3847/PSJ/ad4352",
+      "summary": "Kumari, N., Glotch, T.D., Williams, J.-P., ..., Waller, C.D., et al. (2024). Extended Silicic Volcanism in the Gruithuisen Region—Revisiting the Composition and Thermophysical Properties of Gruithuisen Domes on the Moon. Planetary Science Journal. doi:10.3847/PSJ/ad4352.",
+      "type": "journal"
+    },
+    {
+      "name": "Science Product Pipelines and Archive Architecture for the DART Mission",
+      "publisher": "Planetary Science Journal",
+      "releaseDate": "2024",
+      "url": "https://doi.org/10.3847/PSJ/ad5959",
+      "summary": "Waller, C.D., Espiritu, R.C., Tinsman, C., et al. (2024). Science Product Pipelines and Archive Architecture for the DART Mission. Planetary Science Journal. doi:10.3847/PSJ/ad5959.",
+      "type": "journal"
+    },
+    {
+      "name": "The Influence of Gravity and Magnetic Fields on Brine Formation and Habitability Across the Solar System",
+      "publisher": "Brines Across the Solar System: Ancient and Future Brines",
+      "releaseDate": "2023-05",
+      "url": "",
+      "summary": "Burke, P., Waller, C.D. (2023, May 15–18). The Influence of Gravity and Magnetic Fields on Brine Formation and Habitability Across the Solar System. Brines Across the Solar System: Ancient and Future Brines, Reno, NV. Abstract #2012.",
+      "type": "conference"
+    },
+    {
+      "name": "Ultraviolet and Magnetic Perspectives at Reiner Gamma and the Implications for Solar Wind Weathering",
+      "publisher": "Frontiers in Astronomy and Space Sciences",
+      "releaseDate": "2022",
+      "url": "https://doi.org/10.3389/fspas.2022.926018",
+      "summary": "Waller, C.D., Cahill, J.T.S., Retherford, K.D., et al. (2022). Ultraviolet and Magnetic Perspectives at Reiner Gamma and the Implications for Solar Wind Weathering. Frontiers in Astronomy and Space Sciences. doi:10.3389/fspas.2022.926018.",
+      "type": "journal"
+    },
+    {
+      "name": "Magnetometry",
+      "publisher": "Encyclopedia of Lunar Science (Springer)",
+      "releaseDate": "2022",
+      "url": "https://doi.org/10.1007/978-3-319-05546-6",
+      "summary": "Waller, C.D., Strauss, B.E. (2022). Magnetometry. In B.M. Cudnik (Ed.), Encyclopedia of Lunar Science (1st ed.). Springer. doi:10.1007/978-3-319-05546-6.",
+      "type": "bookSection"
     }
   ]
 }
