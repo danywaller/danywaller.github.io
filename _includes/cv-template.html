@@ -125,7 +125,110 @@
     </ul>
   </div>
   {% endif %}
-  
+
+  {% if cv.awards.size > 0 %}
+  <!-- Awards -->
+  <div class="cv-section">
+    <h2>Awards</h2>
+    <ul class="cv-list">
+      {% for award in cv.awards %}
+      <li class="cv-item">
+        <div class="cv-item-header">
+          <div class="cv-item-title">{{ award.title }}</div>
+          <div class="cv-item-date">{{ award.date }}</div>
+        </div>
+        <div class="cv-item-content">
+          <div class="cv-item-subtitle">{{ award.awarder }}</div>
+          {% if award.summary %}
+          <div class="cv-item-detail">{{ award.summary }}</div>
+          {% endif %}
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+    {% if cv.volunteer.size > 0 %}
+    <!-- Volunteer / Service -->
+    <div class="cv-section">
+      <h2>Volunteer Service</h2>
+      <ul class="cv-list">
+        {% for vol in cv.volunteer %}
+        <li class="cv-item">
+          <div class="cv-item-header">
+            <div class="cv-item-title">{{ vol.position }}</div>
+            <div class="cv-item-date">
+              {{ vol.startDate }}{% if vol.endDate %} - {{ vol.endDate }}{% endif %}
+            </div>
+          </div>
+          <div class="cv-item-content">
+            <div class="cv-item-subtitle">{{ vol.organization }}</div>
+
+            {% if vol.summary %}
+            <div class="cv-item-detail">{{ vol.summary }}</div>
+            {% endif %}
+
+            {% if vol.highlights and vol.highlights.size > 0 %}
+            <ul class="cv-highlights">
+              {% for highlight in vol.highlights %}
+              <li>{{ highlight }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+
+            {% if vol.url %}
+            <div class="cv-item-detail">
+              <a href="{{ vol.url }}" target="_blank">Learn more</a>
+            </div>
+            {% endif %}
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+
+  {% if cv.projects.size > 0 %}
+  <!-- Projects -->
+  <div class="cv-section">
+    <h2>Projects</h2>
+    <ul class="cv-list">
+      {% for project in cv.projects %}
+      <li class="cv-item">
+        <div class="cv-item-header">
+          <div class="cv-item-title">{{ project.name }}</div>
+          <div class="cv-item-date">
+            {{ project.startDate }}{% if project.endDate %} - {{ project.endDate }}{% endif %}
+          </div>
+        </div>
+        <div class="cv-item-content">
+          {% if project.role %}
+          <div class="cv-item-subtitle">{{ project.role }}</div>
+          {% endif %}
+          {% if project.summary %}
+          <div class="cv-item-detail">{{ project.summary }}</div>
+          {% endif %}
+          {% if project.highlights and project.highlights.size > 0 %}
+          <ul class="cv-highlights">
+            {% for highlight in project.highlights %}
+            <li>{{ highlight }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+          {% if project.url %}
+          <div class="cv-item-detail">
+            <a href="{{ project.url }}" target="_blank">View Project</a>
+          </div>
+          {% endif %}
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
   {% if cv.skills.size > 0 %}
   <!-- Skills -->
   <div class="cv-section">
