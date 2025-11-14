@@ -1,0 +1,12 @@
+---
+title: "Successful kinetic impact into an asteroid for planetary defence"
+collection: publications
+category: manuscripts
+permalink: /publication/2023-04-01-Successful-kinetic-impact-into-an-asteroid-for-planetary-defence
+date: 2023-04-01
+venue: 'Nature'
+paperurl: 'https://doi.org/10.1038/s41586-023-05810-5'
+bibtexurl: 'https://danywaller.github.io/files/bibtex1.bib'
+citation: ' R. Terik Daly,  Carolyn Ernst,  Olivier Barnouin,  Nancy Chabot,  Andrew Rivkin,  Andrew Cheng,  Elena Adams,  Harrison Agrusa,  Elisabeth Abel,  Amy Alford,  Erik Asphaug,  Justin Atchison,  Andrew Badger,  Paul Baki,  Ronald-L. Ballouz,  Dmitriy Bekker,  Julie Bellerose,  Shyam Bhaskaran,  Bonnie Buratti,  Saverio Cambioni,  Michelle Chen,  Steven Chesley,  George Chiu,  Gareth Collins,  Matthew Cox,  Mallory DeCoster,  Peter Ericksen,  Raymond Espiritu,  Alan Faber,  Tony Farnham,  Fabio Ferrari,  Zachary Fletcher,  Robert Gaskell,  Dawn Graninger,  Musad Haque,  Patricia Harrington-Duff,  Sarah Hefter,  Isabel Herreros,  Masatoshi Hirabayashi,  Philip Huang,  Syau-Yun Hsieh,  Seth Jacobson,  Stephen Jenkins,  Mark Jensenius,  Jeremy John,  Martin Jutzi,  Tomas Kohout,  Timothy Krueger,  Frank Laipert,  Norberto Lopez,  Robert Luther,  Alice Lucchetti,  Declan Mages,  Simone Marchi,  Anna Martin,  Maria McQuaide,  Patrick Michel,  Nicholas Moskovitz,  Ian Murphy,  Naomi Murdoch,  Shantanu Naidu,  Hari Nair,  Michael Nolan,  Jens Ormö,  Maurizio Pajola,  Eric Palmer,  James Peachey,  Petr Pravec,  Sabina Raducan,  K. Ramesh,  Joshua Ramirez,  Edward Reynolds,  Joshua Richman,  Colas Robin,  Luis Rodriguez,  Lew Roufberg,  Brian Rush,  Carolyn Sawyer,  Daniel Scheeres,  Petr Scheirich,  Stephen Schwartz,  Matthew Shannon,  Brett Shapiro,  Caitlin Shearer,  Evan Smith,  R. Steele,  Jordan Steckloff,  Angela Stickle,  Jessica Sunshine,  Emil Superfin,  Zahi Tarzi,  Cristina Thomas,  Justin Thomas,  Josep Trigo-Rodríguez,  B. Tropf,  Andrew Vaughan,  Dianna Velez,  C. Waller,  Daniel Wilson,  Kristin Wortman,  Yun Zhang, &quot;Successful kinetic impact into an asteroid for planetary defence.&quot; Nature, 2023.'
+---
+[Access paper here](https://doi.org/10.1038/s41586-023-05810-5){:target="_blank"}
