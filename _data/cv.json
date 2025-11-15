@@ -1,10 +1,20 @@
 {
   "basics": {
     "name": "Dany Waller",
-    "label": "Ph.D. Student in Computational Physics",
+    "label": "Ph.D. Student in Computational Physics at Umeå University",
     "email": "dany.c.waller@gmail.com",
     "url": "https://danywaller.github.io",
     "profiles": [
+      {
+        "network": "Google Scholar",
+        "username": "",
+        "url": "https://scholar.google.com/citations?user=tW-sSN4AAAAJ"
+      },
+      {
+        "network": "ORCID",
+        "username": "",
+        "url": "https://orcid.org/0000-0002-6310-3766"
+      },
       {
         "network": "GitHub",
         "username": "lunarswirls",
@@ -12,60 +22,56 @@
       }
     ]
   },
-  "education": [
+    "education": [
     {
       "institution": "Umeå University",
-      "location": "Umeå, Sweden",
-      "area": "Computational Physics",
-      "studyType": "Ph.D.",
+      "area": "Ph.D in Computational Physics",
+      "studyType": "",
       "startDate": "2025",
       "endDate": "",
-      "score": "",
-      "summary": "Ph.D. in Computational Physics"
+      "gpa": null,
+      "courses": []
     },
     {
       "institution": "Johns Hopkins University",
-      "location": "Baltimore, MD",
-      "area": "Applied Physics (Honors)",
-      "studyType": "M.S.",
-      "startDate": "",
+      "area": "M.S. in Applied Physics (Honors)",
+      "studyType": "",
+      "startDate": "2020",
       "endDate": "2022",
-      "score": "",
-      "summary": "M.S. in Applied Physics (Honors)"
+      "gpa": null,
+      "courses": ["Physics of Remote Sensing", "Applied Computational Electromagnetics", "Chaos and Its Applications"]
     },
     {
       "institution": "University of Kentucky",
-      "location": "Lexington, KY",
-      "area": "Mathematics",
-      "studyType": "B.S.",
-      "startDate": "",
+      "area": "B.S. in Mathematics",
+      "studyType": "",
+      "startDate": "2014",
       "endDate": "2019",
-      "score": "",
-      "summary": "B.S. in Mathematics"
+      "gpa": null,
+      "courses": ["Group Theory", "Combinatorics & Graph Theory", "Principles of Analysis"]
     },
     {
       "institution": "University of Kentucky",
-      "location": "Lexington, KY",
-      "area": "Physics",
-      "studyType": "B.A.",
-      "startDate": "",
+      "area": "B.A. in Physics",
+      "studyType": "",
+      "startDate": "2014",
       "endDate": "2019",
-      "score": "",
-      "summary": "B.A. in Physics"
+      "gpa": null,
+      "courses": ["Computational Physics", "Fundamental Geophysics", "Gravity & Magnetic Methods"]
     }
   ],
   "work": [
     {
-      "name": "Umeå University",
+      "company": "Umeå University",
       "position": "Graduate Research Assistant",
-      "location": "Computational Physics Department",
+      "location": "Department of Physics",
       "startDate": "2025",
       "endDate": "",
-      "summary": "Graduate Research Assistant in the Computational Physics Department.",
+      "summary": "Graduate Research Assistant in Dr. Shahab Fatemi's lab in the Department of Physics.",
       "highlights": []
     },
     {
-      "name": "JHU Applied Physics Laboratory",
+      "company": "JHU Applied Physics Laboratory",
       "position": "Associate Professional Staff",
       "location": "Space Exploration Sector",
       "startDate": "2021",
@@ -74,12 +80,30 @@
       "highlights": []
     },
     {
-      "name": "Science Systems & Applications, Inc.",
+      "company": "Science Systems & Applications, Inc.",
       "position": "Scientific Analyst II",
       "location": "NASA Goddard Space Flight Center, Geodesy and Geophysics Laboratory (61A)",
       "startDate": "2020",
       "endDate": "2021",
       "summary": "Scientific Analyst II supporting the Geodesy and Geophysics Laboratory (61A) at NASA Goddard Space Flight Center.",
+      "highlights": []
+    },
+    {
+      "company": "The Living Arts & Science Center",
+      "position": "Farish Planetarium Director",
+      "location": "",
+      "startDate": "2019",
+      "endDate": "2020",
+      "summary": "Director of the Farish Planetarium and Coordinator of the Earth & Space Science Education Program.",
+      "highlights": []
+    },
+    {
+      "company": "University of Kentucky",
+      "position": "Undergraduate Research Assistant",
+      "location": "",
+      "startDate": "2017",
+      "endDate": "2019",
+      "summary": "Undergraduate Research Assistant in Dr. Dhananjay Ravat's lab in the Department of Earth & Environmental Sciences.",
       "highlights": []
     }
   ],
@@ -132,19 +156,19 @@
       "title": "Europa Clipper PIMS Special Achievement Award",
       "date": "2025",
       "awarder": "JHU Applied Physics Laboratory",
-      "summary": ""
+      "summary": "Recognized for role in the successful commissioning of the Plasma Instrument for Magnetic Sounding (PIMS) on Europa Clipper."
     },
     {
       "title": "Lunar Vertex Special Achievement Award",
       "date": "2024",
       "awarder": "JHU Applied Physics Laboratory",
-      "summary": ""
+      "summary": "Recognized for role in the successful calibration and delivery of the Lunar Vertex magnetometer instrument suites."
     },
     {
       "title": "DART Special Achievement Award",
       "date": "2023",
       "awarder": "JHU Applied Physics Laboratory",
-      "summary": ""
+      "summary": "Recognized for contributions to the success of the DART mission."
     },
     {
       "title": "2nd place, NESF/ELS Student Poster Competition",
@@ -156,19 +180,19 @@
       "title": "5 Sigma Physicist",
       "date": "2020",
       "awarder": "American Physical Society (APS)",
-      "summary": ""
+      "summary": "Recognized for STEM advocacy work in local media."
     },
     {
       "title": "Student Impact Award",
       "date": "2019",
       "awarder": "Omicron Delta Kappa Nu Circle",
-      "summary": ""
+      "summary": "Recognized for advocacy work in student affinity groups and public outreach with NASA's Solar System Ambassadors program."
     },
     {
       "title": "Outstanding Senior on UK at the Half",
       "date": "2019",
       "awarder": "University of Kentucky",
-      "summary": ""
+      "summary": "Recognized for advocacy work in student affinity groups and public outreach with NASA's Solar System Ambassadors program."
     }
   ],
   "volunteer": [
@@ -210,7 +234,7 @@
       "startDate": "2018",
       "endDate": "2020",
       "summary": "STEM policy advocate with the American Physical Society.",
-      "highlights": []
+      "highlights": ["Published op-eds in local and regional newspapers advocating for STEM funding and inclusive science practices, and met with local leaders and politicians to discuss STEM investments and community outreach."]
     }
   ],
   "publications": [
@@ -234,7 +258,7 @@
       "name": "The Plasma Instrument for Magnetic Sounding (PIMS) on Europa Clipper: First Light",
       "publisher": "56th Lunar and Planetary Science Conference",
       "releaseDate": "2025-03",
-      "url": "",
+      "url": "https://www.hou.usra.edu/meetings/lpsc2025/pdf/2314.pdf",
       "summary": "Luspay-Kuti, A., Crew, A.B., Waller, D., et al. (2025, March 10–14). The Plasma Instrument for Magnetic Sounding (PIMS) on Europa Clipper: First Light. 56th Lunar and Planetary Science Conference, The Woodlands, TX. Abstract #2314.",
       "type": "conference"
     },
@@ -242,7 +266,7 @@
       "name": "Regional Crustal Characterization Trends in the Western Lunar Limb of Orientale and the Outer Feldspathic Highlands Terrain",
       "publisher": "56th Lunar and Planetary Science Conference",
       "releaseDate": "2025-03",
-      "url": "",
+      "url": "https://www.hou.usra.edu/meetings/lpsc2025/pdf/2618.pdf",
       "summary": "Waller, C.D., Cahill, J.T.S., Fassett, C.I., et al. (2025, March 10–14). Regional Crustal Characterization Trends in the Western Lunar Limb of Orientale and the Outer Feldspathic Highlands Terrain. 56th Lunar and Planetary Science Conference, The Woodlands, TX. Abstract #2618.",
       "type": "conference"
     },
@@ -274,7 +298,7 @@
       "name": "The Influence of Gravity and Magnetic Fields on Brine Formation and Habitability Across the Solar System",
       "publisher": "Brines Across the Solar System: Ancient and Future Brines",
       "releaseDate": "2023-05",
-      "url": "",
+      "url": "https://www.hou.usra.edu/meetings/ancientfuturebrines2023/pdf/2012.pdf",
       "summary": "Burke, P., Waller, C.D. (2023, May 15–18). The Influence of Gravity and Magnetic Fields on Brine Formation and Habitability Across the Solar System. Brines Across the Solar System: Ancient and Future Brines, Reno, NV. Abstract #2012.",
       "type": "conference"
     },
