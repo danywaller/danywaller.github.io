@@ -1,6 +1,6 @@
 ---
 title: "Electromagnetic Field Analysis and Modeling"
-excerpt: "I am developing a Python toolkit for electromagnetic field visualization and modeling at planetary surfaces. <br/><img src='/images/Golitsyn_context.png'>"
+excerpt: "I am developing a Fortran and Python toolkit for equivalent source modeling and potential field visualization at planetary surfaces. <br/><img src='/images/Golitsyn_context.png'>"
 collection: portfolio
 ---
 <p>
@@ -19,9 +19,19 @@ collection: portfolio
 
 <p>
     <br>
+    <h2>GravMagSphere Program</h2>
+    <h3>Equivalent Source Modeling</h3>
+    <br>I am actively developing a <a href="https://github.com/lunarswirls/gravmagpy">Fortran program</a> for gravity and magnetic field equivalent source modeling. GravMagSphere is a derivative of Dr. Dhananjay Ravat's 'moonsphere' model, a potential field forward modeling program that takes a prescribed body geometry and physical properties as input and computes the resulting gravity or magnetic field on an observation grid. I rewrote the 'moonsphere' code into modern, modular Fortran with allocatable arrays, simpler lon-lat polygon handling, and updated field kernels.
+    <br>GravMagSphere provides a direct solver where the field is computed in physical space by numerically summing contributions from source elements at each observation point, and a spectral least-squares spherical-harmonic solver where the source response is represented with spherical-harmonic coefficients and the field is reconstructed from that harmonic expansion.
+    <br>I am currently working on a solution optimization routine in GravMagSphere that will allow for coupled gravity and magnetic field inversions from orbital data, to solve for subsurface geometry of geologic features such as the magnetic anomaly associated with Reiner Gamma.
+</p>
+<img src="/images/VMx_gradiometry_LPSC2025.jpg" alt=""/>
+
+<p>
+    <br>
     <h2>GravMagPy Toolkit</h2>
-    <h3>Equivalent Source Modeling and Potential Field Analysis and Visualization</h3>
-    <br>I have been developing a <a href="https://github.com/lunarswirls/gravmagpy">Python toolkit</a> for gravity and magnetic field visualization and analysis at planetary surfaces, which integrates with equivalent source models to iteratively solve for subsurface sources such as the magnetic anomaly associated with Golitsyn crater (seen below).
+    <h3>Potential Field Analysis and Visualization</h3>
+    <br>As part of GravMagSphere, I have been developing a <a href="https://github.com/lunarswirls/gravmagpy">Python toolkit</a> for gravity and magnetic field visualization and analysis at planetary surfaces, which integrates with other equivalent source solvers to model subsurface sources such as the magnetic anomaly associated with Golitsyn crater (seen below).
 </p>
 <img src="/images/Golitsyn_context.png" alt=""/>
 
