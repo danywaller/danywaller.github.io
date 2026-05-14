@@ -10,7 +10,7 @@ author_profile: true
 A list of the public pages and collections currently enabled on the site. For robots, there is also an [XML sitemap]({{ base_path }}/sitemap.xml).
 
 {% assign public_pages = site.pages | where_exp: "item", "item.sitemap != false" | where_exp: "item", "item.title != nil" | where_exp: "item", "item.url != '/sitemap/'" | sort: "url" %}
-{% assign public_collections = site.collections | where_exp: "collection", "collection.output != false and collection.label != 'posts'" %}
+{% assign public_collections = site.collections | where_exp: "collection", "collection.output != false" | where_exp: "collection", "collection.label != 'posts'" %}
 
 <h2>Pages</h2>
 {% for post in public_pages %}

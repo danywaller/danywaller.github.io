@@ -6,7 +6,12 @@ author_profile: true
 ---
 
 {% assign collection_groups = site.poems | group_by: "poem_collection" | sort: "name" %}
-{% assign standalone_poems = site.poems | where_exp: "poem", "poem.poem_collection == nil or poem.poem_collection == ''" %}
+{% assign standalone_poem_count = 0 %}
+{% for poem in site.poems %}
+  {% if poem.poem_collection == nil or poem.poem_collection == '' %}
+    {% assign standalone_poem_count = standalone_poem_count | plus: 1 %}
+  {% endif %}
+{% endfor %}
 
 {% for group in collection_groups %}
   {% if group.name != "" %}
@@ -22,9 +27,11 @@ author_profile: true
   {% endif %}
 {% endfor %}
 
-{% if standalone_poems.size > 0 %}
+{% if standalone_poem_count > 0 %}
   <h2>Individual Poems</h2>
-  {% for post in standalone_poems reversed %}
-    {% include archive-single-poem.html %}
+  {% for post in site.poems reversed %}
+    {% if post.poem_collection == nil or post.poem_collection == '' %}
+      {% include archive-single-poem.html %}
+    {% endif %}
   {% endfor %}
 {% endif %}
