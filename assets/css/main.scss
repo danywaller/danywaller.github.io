@@ -50,6 +50,8 @@
   align-items: center;
   cursor: pointer;
   display: flex;
+  font-size: 1.5em;
+  font-weight: bold;
   gap: 0.5rem;
   list-style: none;
   margin-bottom: 0.85rem;
@@ -71,16 +73,28 @@
 }
 
 .publication-category__title {
-  font-size: 1.5em;
-  font-weight: bold;
+  line-height: 1.2;
 }
 
 .publication-category__count {
   color: #666;
-  font-size: 0.95em;
+  font-size: 0.7em;
+  font-weight: normal;
 }
 
 .publication-category__items {
   border-top: 1px solid #e2e2e2;
   padding-top: 1rem;
+}
+
+.publication-entry__meta {
+  color: inherit;
+  font-family: inherit;
+  font-size: 1em;
+  line-height: 1.6;
+  margin-top: 0;
+}
+
+.publication-entry__meta a {
+  color: inherit;
 }

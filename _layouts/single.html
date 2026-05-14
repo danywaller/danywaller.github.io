@@ -27,11 +27,26 @@ layout: default
       {% unless page.header.overlay_color or page.header.overlay_image %}
         <header>
           {% if page.title %}<h1 class="page__title" itemprop="headline">{{ page.title | markdownify | remove: "<p>" | remove: "</p>" }}</h1>{% endif %}
-          {% if page.collection == 'publications' and page.author_summary %}
-            <p class="page__meta">
-              {{ page.author_summary }}
+          {% if page.collection == 'publications' %}
+            {% assign publication_date_label = page.publication_date %}
+            {% assign publication_link_url = page.external_url | default: page.paperurl %}
+            {% if publication_date_label == nil or publication_date_label == "" %}
+              {% assign publication_date_label = page.date | default: "1900-01-01" | date: "%B %Y" %}
+            {% endif %}
+            <p class="publication-entry__meta">
+              {% if page.author_summary %}
+                {{ page.author_summary }}.
+              {% endif %}
+              {{ publication_date_label }}.
+              {% if page.category == 'conferences' %}
+                {{ page.venue }}.
+              {% else %}
+                Published in {{ page.venue }}.
+              {% endif %}
               {% if page.doi %}
-                <span> DOI: <a href="https://doi.org/{{ page.doi | uri_escape }}" target="_blank" rel="noopener noreferrer">{{ page.doi }}</a></span>
+                DOI: <a href="https://doi.org/{{ page.doi | uri_escape }}" target="_blank" rel="noopener noreferrer">{{ page.doi }}</a>
+              {% elsif publication_link_url %}
+                URL: <a href="{{ publication_link_url }}" target="_blank" rel="noopener noreferrer">{{ publication_link_url }}</a>
               {% endif %}
             </p>
           {% endif %}
@@ -45,15 +60,6 @@ layout: default
         {% if page.collection == 'teaching' %}
           <p> {{ page.type }}, <i>{{ page.venue }}</i>, {{ page.date | default: "1900-01-01" | date: "%Y" }} </p>
         {% elsif page.collection == 'publications' %}
-          {% assign publication_date_label = page.publication_date %}
-          {% if publication_date_label == nil or publication_date_label == "" %}
-            {% assign publication_date_label = page.date | default: "1900-01-01" | date: "%B %Y" %}
-          {% endif %}
-          {% if page.category == 'conferences' %}
-            <p><i>{{ page.venue }}</i>, {{ publication_date_label }} </p>
-          {% else %}
-            <p>Published in <i>{{ page.venue }}</i>, {{ publication_date_label }} </p>
-          {% endif %}
         {% elsif page.collection == 'portfolio' %}
         {% elsif page.venue and page.date %}
           <p>Published in <i>{{ page.venue }}</i>, {{ page.date | default: "1900-01-01" | date: "%Y" }} </p>

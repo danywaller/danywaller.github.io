@@ -37,11 +37,26 @@
       {% endif %}
     </h2>
 
-    {% if post.collection == 'publications' and post.author_summary %}
-      <p class="archive__item-excerpt" itemprop="description">
-        {{ post.author_summary }}
+    {% if post.collection == 'publications' %}
+      {% assign publication_date_label = post.publication_date %}
+      {% assign publication_link_url = post.external_url | default: post.paperurl %}
+      {% if publication_date_label == nil or publication_date_label == "" %}
+        {% assign publication_date_label = post.date | default: "1900-01-01" | date: "%B %Y" %}
+      {% endif %}
+      <p class="publication-entry__meta" itemprop="description">
+        {% if post.author_summary %}
+          {{ post.author_summary }}.
+        {% endif %}
+        {{ publication_date_label }}.
+        {% if post.category == 'conferences' %}
+          {{ post.venue }}.
+        {% else %}
+          Published in {{ post.venue }}.
+        {% endif %}
         {% if post.doi %}
-          <span> DOI: <a href="https://doi.org/{{ post.doi | uri_escape }}" target="_blank" rel="noopener noreferrer">{{ post.doi }}</a></span>
+          DOI: <a href="https://doi.org/{{ post.doi | uri_escape }}" target="_blank" rel="noopener noreferrer">{{ post.doi }}</a>
+        {% elsif publication_link_url %}
+          URL: <a href="{{ publication_link_url }}" target="_blank" rel="noopener noreferrer">{{ publication_link_url }}</a>
         {% endif %}
       </p>
     {% endif %}
@@ -53,15 +68,6 @@
         {% if post.collection == 'teaching' %}
           <p> {{ post.type }}, <i>{{ post.venue }}</i>, {{ post.date | default: "1900-01-01" | date: "%Y" }} </p>
         {% elsif post.collection == 'publications' %}
-          {% assign publication_date_label = post.publication_date %}
-          {% if publication_date_label == nil or publication_date_label == "" %}
-            {% assign publication_date_label = post.date | default: "1900-01-01" | date: "%B %Y" %}
-          {% endif %}
-          {% if post.category == 'conferences' %}
-            <p><i>{{ post.venue }}</i>, {{ publication_date_label }} </p>
-          {% else %}
-            <p>Published in <i>{{ post.venue }}</i>, {{ publication_date_label }} </p>
-          {% endif %}
         {% elsif post.collection == 'portfolio' %}
         {% elsif post.date %}
          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Published:" }}</strong> <time datetime="{{ post.date | default: "1900-01-01" | date_to_xmlschema }}">{{ post.date | default: "1900-01-01" | date: "%B %d, %Y" }}</time></p>
