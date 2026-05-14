@@ -26,3 +26,5 @@ images/.DS_Store
 .idea/misc.xml
 .idea/modules.xml
 .idea/vcs.xml
+/markdown_generator/__pycache__
+*.pyc

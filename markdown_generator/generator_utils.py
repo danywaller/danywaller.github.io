@@ -16,6 +16,7 @@ from __future__ import annotations
 import math
 from pathlib import Path
 import re
+from urllib.parse import quote
 
 
 HTML_ESCAPE_TABLE = {
@@ -114,6 +115,9 @@ BIBTEX_SOURCE_BY_ENTRY_TYPE = {
         "permalink_prefix": DEFAULT_PUBLICATION_PERMALINK,
     },
 }
+BAAS_BOOKTITLE_PREFIX_BY_MEETING = {
+    "55th annual meeting of the division for planetary sciences": "2023n8",
+}
 
 
 def clean_value(value):
@@ -143,6 +147,12 @@ def strip_bibtex_markup(value):
     return clean_value(value).replace("{", "").replace("}", "").replace("\\", "")
 
 
+def normalize_bibtex_text(value):
+    """Normalize a BibTeX field for case-insensitive comparisons."""
+    text = strip_bibtex_markup(value).lower()
+    return re.sub(r"\s+", " ", text).strip()
+
+
 def make_url_slug(value):
     """Create a file-safe slug from a title-like string."""
     clean_title = strip_bibtex_markup(value).replace(" ", "-")
@@ -156,6 +166,174 @@ def make_short_title_slug(value, max_words=3):
     if max_words > 0:
         words = words[:max_words]
     return make_url_slug(" ".join(words))
+
+
+def build_doi_url(value):
+    """Normalize a DOI or DOI URL into a canonical doi.org link."""
+    text = clean_value(value)
+    if not text:
+        return ""
+
+    text = re.sub(r"^https?://(?:dx\.)?doi\.org/", "", text, flags=re.IGNORECASE)
+    text = re.sub(r"^doi:\s*", "", text, flags=re.IGNORECASE)
+    if not text:
+        return ""
+
+    return f"https://doi.org/{text}"
+
+
+def extract_doi(value):
+    """Extract a DOI string from a DOI field or DOI URL."""
+    text = clean_value(value)
+    if not text:
+        return ""
+
+    if re.match(r"^https?://(?:dx\.)?doi\.org/", text, flags=re.IGNORECASE):
+        return re.sub(r"^https?://(?:dx\.)?doi\.org/", "", text, flags=re.IGNORECASE)
+
+    if re.match(r"^doi:\s*", text, flags=re.IGNORECASE):
+        return re.sub(r"^doi:\s*", "", text, flags=re.IGNORECASE)
+
+    if re.match(r"^10\.\d{4,9}/", text):
+        return text
+
+    return ""
+
+
+def build_primary_publication_url(fields):
+    """Return the publisher or DOI URL for an article-like publication."""
+    doi = clean_value(fields.get("doi"))
+    if doi:
+        return build_doi_url(doi)
+
+    url = clean_value(fields.get("url"))
+    if url:
+        return url
+
+    return ""
+
+
+def is_lpsc_proceeding(fields):
+    """Return true when a proceeding is from the Lunar and Planetary Science Conference."""
+    booktitle = normalize_bibtex_text(fields.get("booktitle"))
+    return "lunar and planetary science conference" in booktitle
+
+
+def build_lpsc_abstract_url(fields):
+    """Build the official LPSC abstract PDF URL when the needed fields are available."""
+    if not is_lpsc_proceeding(fields):
+        return ""
+
+    year = clean_value(fields.get("year"))
+    abstract_pages = clean_value(fields.get("pages"))
+    abstract_number_match = re.search(r"\d{3,4}", abstract_pages)
+    if not year.isdigit() or not abstract_number_match:
+        return ""
+
+    return (
+        f"https://www.hou.usra.edu/meetings/lpsc{year}/pdf/"
+        f"{abstract_number_match.group(0)}.pdf"
+    )
+
+
+def build_hou_meeting_pdf_url(fields):
+    """Build an official hou.usra.edu meeting PDF URL when the meeting is known."""
+    lpsc_url = build_lpsc_abstract_url(fields)
+    if lpsc_url:
+        return lpsc_url
+
+    booktitle = normalize_bibtex_text(fields.get("booktitle"))
+    meeting_slug = ""
+    if "lunar exploration analysis group" in booktitle:
+        meeting_slug = "leag"
+    elif "brines across the solar system" in booktitle:
+        meeting_slug = "ancientfuturebrines"
+
+    if not meeting_slug:
+        return ""
+
+    year = clean_value(fields.get("year"))
+    abstract_pages = clean_value(fields.get("pages"))
+    abstract_number_match = re.search(r"\d{3,4}", abstract_pages)
+    if not year.isdigit() or not abstract_number_match:
+        return ""
+
+    return (
+        f"https://www.hou.usra.edu/meetings/{meeting_slug}{year}/pdf/"
+        f"{abstract_number_match.group(0)}.pdf"
+    )
+
+
+def build_baas_download_pdf_url(fields):
+    """Build a BAAS direct PDF URL when the meeting metadata is recognized."""
+    booktitle = normalize_bibtex_text(fields.get("booktitle"))
+    prefix = BAAS_BOOKTITLE_PREFIX_BY_MEETING.get(booktitle)
+    if not prefix:
+        return ""
+
+    page_match = re.fullmatch(r"\s*(\d+)\.(\d+)\s*", clean_value(fields.get("pages")))
+    if not page_match:
+        return ""
+
+    session_number, presentation_number = page_match.groups()
+    return (
+        f"https://baas.aas.org/pub/{prefix}"
+        f"i{session_number}p{presentation_number}/download/pdf"
+    )
+
+
+def build_publisher_proceeding_url(fields):
+    """Build the best official publisher-hosted URL for a conference proceeding."""
+    return build_hou_meeting_pdf_url(fields) or build_baas_download_pdf_url(fields)
+
+
+def extract_ads_bibcode(entry):
+    """Extract an ADS bibcode from the entry annotation or fallback key."""
+    annotation = clean_value(entry["fields"].get("annotation"))
+    annotation_match = re.search(r"ADS Bibcode:\s*([^\s,;]+)", annotation)
+    if annotation_match:
+        return annotation_match.group(1)
+
+    entry_key = clean_value(entry.get("key"))
+    if re.fullmatch(r"\d{4}[A-Za-z0-9.]{8,}", entry_key):
+        return entry_key
+
+    return ""
+
+
+def build_ads_abstract_url(entry):
+    """Build an ADS abstract URL from the entry bibcode when available."""
+    bibcode = extract_ads_bibcode(entry)
+    if not bibcode:
+        return ""
+
+    return f"https://ui.adsabs.harvard.edu/abs/{quote(bibcode, safe='')}/abstract"
+
+
+def build_publication_external_url(entry):
+    """Build the best direct outbound URL for a publication."""
+    fields = entry["fields"]
+    primary_url = build_primary_publication_url(fields)
+    entry_type = clean_value(entry.get("type")).lower()
+
+    if entry_type in {"inproceedings", "conference", "proceedings"}:
+        return build_publisher_proceeding_url(fields) or primary_url or build_ads_abstract_url(entry)
+
+    return primary_url
+
+
+def build_author_summary(author_names, max_authors=3):
+    """Build a short author list ending in et al. when truncated."""
+    clean_authors = [clean_value(author) for author in author_names if clean_value(author)]
+    if not clean_authors:
+        return ""
+
+    visible_authors = clean_authors[:max_authors]
+    summary = ", ".join(visible_authors)
+    if len(clean_authors) > max_authors:
+        summary += ", et al."
+
+    return summary
 
 
 def normalize_month(value, default=""):
@@ -434,13 +612,16 @@ def build_publication_record_from_bib_entry(entry, source_config=None):
     file_slug = make_short_title_slug(title, max_words=3)
 
     author_names = entry.get("authors", [])
+    author_summary = build_author_summary(author_names, max_authors=3)
     if author_names:
         citation = ",  ".join(author_names)
         citation += f', "{title}." {venue}, {pub_year}.'
     else:
         citation = f'"{title}." {venue}, {pub_year}.'
 
-    paper_url = clean_value(fields.get("url"))
+    doi = extract_doi(fields.get("doi") or fields.get("url"))
+    paper_url = build_primary_publication_url(fields)
+    external_url = build_publication_external_url(entry)
     excerpt = clean_value(fields.get("note"))
     scholar_query = re.sub(r"\s+", "+", title)
 
@@ -451,9 +632,13 @@ def build_publication_record_from_bib_entry(entry, source_config=None):
         "publication_date": publication_date,
         "file_slug": file_slug,
         "url_slug": url_slug,
+        "entry_type": clean_value(entry.get("type")).lower(),
+        "author_summary": author_summary,
+        "doi": doi,
         "venue": venue,
         "citation": citation,
         "excerpt": excerpt,
+        "external_url": external_url,
         "paper_url": paper_url,
         "collection": config["collection"],
         "category": config["category"],
@@ -475,9 +660,13 @@ def build_publication_markdown(record):
     category = normalize_category(record.get("category"))
     permalink_prefix = clean_value(record.get("permalink_prefix")) or DEFAULT_PUBLICATION_PERMALINK
     title = html_escape(record["title"])
+    author_summary = html_escape(record.get("author_summary"))
+    doi = clean_value(record.get("doi"))
     venue = html_escape(record["venue"])
     citation = html_escape(record["citation"])
     excerpt = html_escape(record.get("excerpt"))
+    entry_type = clean_value(record.get("entry_type")).lower()
+    external_url = clean_value(record.get("external_url"))
     paper_url = clean_value(record.get("paper_url"))
     slides_url = clean_value(record.get("slides_url"))
     bibtex_url = clean_value(record.get("bibtex_url"))
@@ -497,12 +686,19 @@ def build_publication_markdown(record):
         [
             format_publication_date_front_matter(pub_date),
             f'publication_date: "{publication_date}"',
+            f"author_summary: '{author_summary}'",
             f"venue: '{venue}'",
         ]
     )
 
+    if doi:
+        lines.append(f"doi: '{doi}'")
+
     if paper_url:
         lines.append(f"paperurl: '{paper_url}'")
+
+    if external_url:
+        lines.append(f"external_url: '{external_url}'")
 
     if slides_url:
         lines.append(f"slidesurl: '{slides_url}'")
@@ -522,7 +718,7 @@ def build_publication_markdown(record):
     if excerpt:
         body.append(excerpt)
 
-    if not paper_url:
+    if entry_type != "article" and not (paper_url or external_url):
         scholar_query = clean_value(record.get("scholar_query"))
         if scholar_query:
             body.append(
