@@ -21,7 +21,7 @@ listening to the echoes of a heart come undone.
 
 There is love in studying an absence this closely,
 
-in cataloguing what is left and what could not stay.
+in cataloging what is left and what could not stay.
 
 O MAVEN, make us tender to erosion,
 
