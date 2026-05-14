@@ -30,19 +30,58 @@ layout: default
           {% if page.read_time %}
             <p class="page__meta"><i class="fa fa-clock" aria-hidden="true"></i> {% include read-time.html %}</p>
           {% endif %}
-        {% if page.modified %}
-          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i>Date:</strong> <time datetime="{{ page.modified | date: "%Y-%m-%d" }}">{{ page.modified | date: "%B %d, %Y" }}</time></p>
-        {% elsif page.date %}
-          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i>Date:</strong> <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time></p>
-        {% endif %}
-        {% if page.talk_type %}<p>{{page.talk_type}} at {{ page.venue }},  {{page.location}} {% endif %}
+          {% if page.venue or page.modified or page.date or page.hyperlink %}
+            {% assign show_meta_separator = false %}
+            <p class="page__meta">
+              {% if page.venue %}
+                {{ page.venue }}
+                {% assign show_meta_separator = true %}
+              {% endif %}
+              {% if page.modified %}
+                {% if show_meta_separator %} · {% endif %}
+                <time datetime="{{ page.modified | date: "%Y-%m-%d" }}">{{ page.modified | date: "%B %d, %Y" }}</time>
+                {% assign show_meta_separator = true %}
+              {% elsif page.date %}
+                {% if show_meta_separator %} · {% endif %}
+                <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time>
+                {% assign show_meta_separator = true %}
+              {% endif %}
+              {% if page.hyperlink %}
+                {% if show_meta_separator %} · {% endif %}
+                <a href="{{ page.hyperlink }}" target="_blank" rel="noopener">learn more</a>
+              {% endif %}
+            </p>
+          {% endif %}
 
         </header>
       {% endunless %}
 
       <section class="page__content" itemprop="text">
+        {% if page.image %}
+          <figure class="poem__image">
+            <img src="{{ page.image | prepend: '/images/' | prepend: base_path }}" alt="{{ page.image_alt | default: page.title }}" style="max-width: 100%; height: auto;">
+            {% if page.image_caption %}
+              <figcaption>{{ page.image_caption }}</figcaption>
+            {% endif %}
+          </figure>
+        {% endif %}
+        {% if page.images %}
+          <div class="poem__images">
+            {% for poem_image in page.images %}
+              <figure class="poem__image">
+                {% if poem_image.image_path %}
+                  <img src="{{ poem_image.image_path | prepend: '/images/' | prepend: base_path }}" alt="{{ poem_image.alt | default: page.title }}" style="max-width: 100%; height: auto;">
+                {% else %}
+                  <img src="{{ poem_image | prepend: '/images/' | prepend: base_path }}" alt="{{ page.title }}" style="max-width: 100%; height: auto;">
+                {% endif %}
+                {% if poem_image.caption %}
+                  <figcaption>{{ poem_image.caption }}</figcaption>
+                {% endif %}
+              </figure>
+            {% endfor %}
+          </div>
+        {% endif %}
         {{ content }}
-        {% if page.link %}<div><a href="{{ page.link }}" class="btn">{{ site.data.ui-text[site.locale].ext_link_label | default: "Direct Link" }}</a></div>{% endif %}
       </section>
 
       <footer class="page__meta">

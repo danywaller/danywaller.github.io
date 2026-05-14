@@ -30,7 +30,8 @@
       "startDate": "2025",
       "endDate": "",
       "gpa": null,
-      "courses": []
+      "courses": [],
+      "address": "Umeå, Sweden, 901 87"
     },
     {
       "institution": "Johns Hopkins University",
@@ -39,7 +40,8 @@
       "startDate": "2020",
       "endDate": "2022",
       "gpa": null,
-      "courses": ["Physics of Remote Sensing", "Applied Computational Electromagnetics", "Chaos and Its Applications"]
+      "courses": ["Physics of Remote Sensing", "Applied Computational Electromagnetics", "Chaos and Its Applications"],
+      "address": "Baltimore, Maryland, USA, 21218"
     },
     {
       "institution": "University of Kentucky",
@@ -48,7 +50,8 @@
       "startDate": "2014",
       "endDate": "2019",
       "gpa": null,
-      "courses": ["Group Theory", "Combinatorics & Graph Theory", "Principles of Analysis"]
+      "courses": ["Group Theory", "Combinatorics & Graph Theory", "Principles of Analysis"],
+      "address": "Lexington, Kentucky, USA, 40506"
     },
     {
       "institution": "University of Kentucky",
@@ -57,7 +60,8 @@
       "startDate": "2014",
       "endDate": "2019",
       "gpa": null,
-      "courses": ["Computational Physics", "Fundamental Geophysics", "Gravity & Magnetic Methods"]
+      "courses": ["Computational Physics", "Fundamental Geophysics", "Gravity & Magnetic Methods"],
+      "address": "Lexington, Kentucky, USA, 40506"
     }
   ],
   "work": [
@@ -68,7 +72,8 @@
       "startDate": "2025",
       "endDate": "",
       "summary": "Graduate Research Assistant in Dr. Shahab Fatemi's lab in the Department of Physics.",
-      "highlights": []
+      "highlights": [],
+      "address": "Umeå, Sweden, 901 87"
     },
     {
       "company": "JHU Applied Physics Laboratory",
@@ -77,7 +82,8 @@
       "startDate": "2021",
       "endDate": "2025",
       "summary": "Associate Professional Staff in the Space Exploration Sector.",
-      "highlights": []
+      "highlights": [],
+      "address": "Laurel, Maryland, USA, 20723"
     },
     {
       "company": "Science Systems & Applications, Inc.",
@@ -86,7 +92,8 @@
       "startDate": "2020",
       "endDate": "2021",
       "summary": "Scientific Analyst II supporting the Geodesy and Geophysics Laboratory (61A) at NASA Goddard Space Flight Center.",
-      "highlights": []
+      "highlights": [],
+      "address": "Greenbelt, Maryland, USA, 20771"
     },
     {
       "company": "The Living Arts & Science Center",
@@ -95,7 +102,8 @@
       "startDate": "2019",
       "endDate": "2020",
       "summary": "Director of the Farish Planetarium and Coordinator of the Earth & Space Science Education Program.",
-      "highlights": []
+      "highlights": [],
+      "address": "Lexington, Kentucky, USA, 40508"
     },
     {
       "company": "University of Kentucky",
@@ -104,7 +112,8 @@
       "startDate": "2017",
       "endDate": "2019",
       "summary": "Undergraduate Research Assistant in Dr. Dhananjay Ravat's lab in the Department of Earth & Environmental Sciences.",
-      "highlights": []
+      "highlights": [],
+      "address": "Lexington, Kentucky, USA, 40506"
     }
   ],
   "projects": [

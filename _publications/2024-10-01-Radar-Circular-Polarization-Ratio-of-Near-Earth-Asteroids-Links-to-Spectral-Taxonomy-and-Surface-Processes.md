@@ -3,10 +3,8 @@ title: "Radar Circular Polarization Ratio of Near-Earth Asteroids: Links to Spec
 collection: publications
 category: manuscripts
 permalink: /publication/2024-10-01-Radar-Circular-Polarization-Ratio-of-Near-Earth-Asteroids-Links-to-Spectral-Taxonomy-and-Surface-Processes
-date: 2024-10-01
+date: "2024-October"
 venue: 'The Planetary Science Journal'
-paperurl: 'https://doi.org/10.3847/PSJ/ad7df1'
-bibtexurl: 'https://danywaller.github.io/files/bibtex1.bib'
-citation: ' Edgard Rivera-Valentín,  Betzaida Aponte-Hernández,  Patrick Taylor,  Michael Nolan,  Ellen Howell,  Dany Waller,  Luisa Zambrano-Marín,  Anne Virkki,  Ronald-Louis Ballouz,  Angela Stickle, &quot;Radar Circular Polarization Ratio of Near-Earth Asteroids: Links to Spectral Taxonomy and Surface Processes.&quot; The Planetary Science Journal, 2024.'
+citation: 'Edgard G. Rivera-Valentín,  Betzaida Aponte-Hernández,  Patrick A. Taylor,  Michael C. Nolan,  Ellen S. Howell,  Dany Waller,  Luisa F. Zambrano-Marín,  Anne K. Virkki,  Ronald-Louis Ballouz,  Angela M. Stickle, &quot;Radar Circular Polarization Ratio of Near-Earth Asteroids: Links to Spectral Taxonomy and Surface Processes.&quot; The Planetary Science Journal, 2024.'
 ---
-[Access paper here](https://doi.org/10.3847/PSJ/ad7df1){:target="_blank"}
+Use [Google Scholar](https://scholar.google.com/scholar?q=Radar+Circular+Polarization+Ratio+of+Near-Earth+Asteroids:+Links+to+Spectral+Taxonomy+and+Surface+Processes){:target="_blank"} for the full citation

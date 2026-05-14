@@ -1,160 +1,74 @@
-#!/usr/bin/env python
-# coding: utf-8
+#!/usr/bin/env python3
+"""Generate publication markdown files from one or more BibTeX sources.
 
-# # Publications markdown generator for academicpages
-# 
-# Takes a set of bibtex of publications and converts them for use with [academicpages.github.io](academicpages.github.io). This is an interactive Jupyter notebook ([see more info here](http://jupyter-notebook-beginner-guide.readthedocs.io/en/latest/what_is_jupyter.html)). 
-# 
-# The core python code is also in `pubsFromBibs.py`. 
-# Run either from the `markdown_generator` folder after replacing updating the publist dictionary with:
-# * bib file names
-# * specific venue keys based on your bib file preferences
-# * any specific pre-text for specific files
-# * Collection Name (future feature)
-# 
-# TODO: Make this work with other databases of citations, 
-# TODO: Merge this with the existing TSV parsing solution
+This script remains as a compatibility entry point for workflows that keep
+separate BibTeX files for journals, proceedings, or books. It now shares the
+same markdown-building code as `publications.py`, so both BibTeX entry points
+produce the same front matter shape.
+"""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+from generator_utils import (
+    build_publication_markdown,
+    build_publication_record_from_bib_entry,
+    clean_value,
+    parse_bibtex_entries,
+    write_markdown,
+)
 
 
-from pybtex.database.input import bibtex
-import pybtex.database.input.bibtex 
-from time import strptime
-import string
-import html
-import os
-import re
+SCRIPT_DIR = Path(__file__).resolve().parent
+DEFAULT_OUTPUT_DIR = SCRIPT_DIR.parent / "_publications"
 
-#todo: incorporate different collection types rather than a catch all publications, requires other changes to template
+
+# Each source can override the shared BibTeX defaults. The category field is
+# what the site uses to group publications on the archive page.
 publist = {
     "proceeding": {
-        "file" : "proceedings.bib",
+        "file": "proceedings.bib",
         "venuekey": "booktitle",
         "venue-pretext": "In the proceedings of ",
-        "collection" : {"name":"publications",
-                        "permalink":"/publication/"}
-        
+        "collection": "publications",
+        "category": "conferences",
+        "permalink_prefix": "/publication/",
     },
-    "journal":{
+    "journal": {
         "file": "pubs.bib",
-        "venuekey" : "journal",
-        "venue-pretext" : "",
-        "collection" : {"name":"publications",
-                        "permalink":"/publication/"}
-    } 
+        "venuekey": "journal",
+        "venue-pretext": "",
+        "collection": "publications",
+        "category": "manuscripts",
+        "permalink_prefix": "/publication/",
+    },
 }
 
-html_escape_table = {
-    "&": "&amp;",
-    '"': "&quot;",
-    "'": "&apos;"
-    }
 
-def html_escape(text):
-    """Produce entities within text."""
-    return "".join(html_escape_table.get(c,c) for c in text)
+def generate_source(source_name, source_config, output_dir):
+    """Generate markdown for a configured BibTeX source."""
+    source_path = SCRIPT_DIR / source_config["file"]
+    if not source_path.exists():
+        print(f"Skipped {source_name}: missing {source_path.name}")
+        return
 
-
-for pubsource in publist:
-    parser = bibtex.Parser()
-    bibdata = parser.parse_file(publist[pubsource]["file"])
-
-    #loop through the individual references in a given bibtex file
-    for bib_id in bibdata.entries:
-        #reset default date
-        pub_year = "1900"
-        pub_month = "01"
-        pub_day = "01"
-        
-        b = bibdata.entries[bib_id].fields
-        
+    for entry in parse_bibtex_entries(source_path):
         try:
-            pub_year = f'{b["year"]}'
+            record = build_publication_record_from_bib_entry(entry, source_config)
+            md_filename, markdown = build_publication_markdown(record)
+            destination = write_markdown(output_dir, md_filename, markdown)
+            print(f"Wrote {destination.name}")
+        except KeyError as error:
+            title = clean_value(entry["fields"].get("title")) or entry["key"]
+            print(f"Skipped {title}: missing expected field {error}")
 
-            #todo: this hack for month and day needs some cleanup
-            if "month" in b.keys(): 
-                if(len(b["month"])<3):
-                    pub_month = "0"+b["month"]
-                    pub_month = pub_month[-2:]
-                elif(b["month"] not in range(12)):
-                    tmnth = strptime(b["month"][:3],'%b').tm_mon   
-                    pub_month = "{:02d}".format(tmnth) 
-                else:
-                    pub_month = str(b["month"])
-            if "day" in b.keys(): 
-                pub_day = str(b["day"])
 
-                
-            pub_date = pub_year+"-"+pub_month+"-"+pub_day
-            
-            #strip out {} as needed (some bibtex entries that maintain formatting)
-            clean_title = b["title"].replace("{", "").replace("}","").replace("\\","").replace(" ","-")    
+def main():
+    """Run the generator for each configured BibTeX source."""
+    for source_name, source_config in publist.items():
+        generate_source(source_name, source_config, DEFAULT_OUTPUT_DIR)
 
-            url_slug = re.sub("\\[.*\\]|[^a-zA-Z0-9_-]", "", clean_title)
-            url_slug = url_slug.replace("--","-")
 
-            md_filename = (str(pub_date) + "-" + url_slug + ".md").replace("--","-")
-            html_filename = (str(pub_date) + "-" + url_slug).replace("--","-")
-
-            #Build Citation from text
-            citation = ""
-
-            #citation authors - todo - add highlighting for primary author?
-            for author in bibdata.entries[bib_id].persons["author"]:
-                citation = citation+" "+author.first_names[0]+" "+author.last_names[0]+", "
-
-            #citation title
-            citation = citation + "\"" + html_escape(b["title"].replace("{", "").replace("}","").replace("\\","")) + ".\""
-
-            #add venue logic depending on citation type
-            venue = publist[pubsource]["venue-pretext"]+b[publist[pubsource]["venuekey"]].replace("{", "").replace("}","").replace("\\","")
-
-            citation = citation + " " + html_escape(venue)
-            citation = citation + ", " + pub_year + "."
-
-            
-            ## YAML variables
-            md = "---\ntitle: \""   + html_escape(b["title"].replace("{", "").replace("}","").replace("\\","")) + '"\n'
-            
-            md += """collection: """ +  publist[pubsource]["collection"]["name"]
-
-            md += """\npermalink: """ + publist[pubsource]["collection"]["permalink"]  + html_filename
-            
-            note = False
-            if "note" in b.keys():
-                if len(str(b["note"])) > 5:
-                    md += "\nexcerpt: '" + html_escape(b["note"]) + "'"
-                    note = True
-
-            md += "\ndate: " + str(pub_date) 
-
-            md += "\nvenue: '" + html_escape(venue) + "'"
-            
-            url = False
-            if "url" in b.keys():
-                if len(str(b["url"])) > 5:
-                    md += "\npaperurl: '" + b["url"] + "'"
-                    url = True
-
-            md += "\ncitation: '" + html_escape(citation) + "'"
-
-            md += "\n---"
-
-            
-            ## Markdown description for individual page
-            if note:
-                md += "\n" + html_escape(b["note"]) + "\n"
-
-            if url:
-                md += "\n[Access paper here](" + b["url"] + "){:target=\"_blank\"}\n" 
-            else:
-                md += "\nUse [Google Scholar](https://scholar.google.com/scholar?q="+html.escape(clean_title.replace("-","+"))+"){:target=\"_blank\"} for full citation"
-
-            md_filename = os.path.basename(md_filename)
-
-            with open("../_publications/" + md_filename, 'w', encoding="utf-8") as f:
-                f.write(md)
-            print(f'SUCCESSFULLY PARSED {bib_id}: \"', b["title"][:60],"..."*(len(b['title'])>60),"\"")
-        # field may not exist for a reference
-        except KeyError as e:
-            print(f'WARNING Missing Expected Field {e} from entry {bib_id}: \"', b["title"][:30],"..."*(len(b['title'])>30),"\"")
-            continue
+if __name__ == "__main__":
+    main()

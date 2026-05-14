@@ -47,10 +47,10 @@ Publications
     {% include archive-single-cv.html %}
   {% endfor %}</ul>
   
-Talks
+Poetry
 ======
-  <ul>{% for post in site.talks reversed %}
-    {% include archive-single-talk-cv.html  %}
+  <ul>{% for post in site.poems reversed %}
+    {% include archive-single-poem-cv.html %}
   {% endfor %}</ul>
   
 Teaching

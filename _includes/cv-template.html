@@ -276,24 +276,36 @@
   </div>
   {% endif %}
   
-  {% if cv.presentations.size > 0 %}
-  <!-- Presentations/Talks -->
+  {% assign poetry_items = cv.poetry | default: cv.presentations %}
+  {% if poetry_items.size > 0 %}
+  <!-- Poetry -->
   <div class="cv-section">
-    <h2>Presentations</h2>
+    <h2>Poetry</h2>
     <ul class="cv-list">
-      {% for talk in cv.presentations %}
+      {% for poem in poetry_items %}
       <li class="cv-item">
         <div class="cv-item-header">
-          <div class="cv-item-title">{{ talk.name }}</div>
-          <div class="cv-item-date">{{ talk.date | slice: 0, 4 }}</div>
+          <div class="cv-item-title">{{ poem.name }}</div>
+          {% if poem.date %}
+          <div class="cv-item-date">{{ poem.date | slice: 0, 4 }}</div>
+          {% endif %}
         </div>
         <div class="cv-item-content">
-          <div class="cv-item-subtitle">{{ talk.event }}</div>
-          {% if talk.location %}
-          <div class="cv-item-detail">{{ talk.location }}</div>
+          {% if poem.venue or poem.hyperlink %}
+          {% assign show_meta_separator = false %}
+          <div class="cv-item-subtitle">
+            {% if poem.venue %}
+            {{ poem.venue }}
+            {% assign show_meta_separator = true %}
+            {% endif %}
+            {% if poem.hyperlink %}
+            {% if show_meta_separator %} · {% endif %}
+            <a href="{{ poem.hyperlink }}" target="_blank" rel="noopener">learn more</a>
+            {% endif %}
+          </div>
           {% endif %}
-          {% if talk.description %}
-          <div class="cv-item-detail">{{ talk.description }}</div>
+          {% if poem.description %}
+          <div class="cv-item-detail">{{ poem.description }}</div>
           {% endif %}
         </div>
       </li>

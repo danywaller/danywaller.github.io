@@ -1,0 +1,41 @@
+name: Refresh Career Map Page
+
+on:
+  push:
+    paths:
+      - "_data/cv.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh-map:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate CV data
+        run: python -m json.tool _data/cv.json > /dev/null
+
+      - name: Refresh careermap source marker
+        run: |
+          # Keep a visible refresh stamp in the map source so a CV data update
+          # results in a concrete map.html change that can be committed.
+          timestamp="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          sed -i "s#<!-- cv-map-refresh: .* -->#<!-- cv-map-refresh: ${timestamp} -->#" _pages/careermap-map.html
+
+      - name: Commit refreshed map page
+        run: |
+          if git diff --quiet -- _pages/careermap-map.html; then
+            echo "map.html is already up to date."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add _pages/careermap-map.html
+          git commit -m "Refresh careermap map.html from cv.json"
+          git push

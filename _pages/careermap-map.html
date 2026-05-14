@@ -1,0 +1,225 @@
+---
+layout: null
+permalink: /careermap/map.html
+sitemap: false
+---
+<!-- cv-map-refresh: manual -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Map</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    >
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <style>
+      body {
+        margin: 0;
+        font-family: Georgia, serif;
+        background: #f7f4ed;
+        color: #2c2926;
+      }
+
+      .map-shell {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      .map-header {
+        padding: 1rem 1.25rem 0.75rem;
+        border-bottom: 1px solid rgba(44, 41, 38, 0.12);
+        background: rgba(255, 255, 255, 0.72);
+      }
+
+      .map-header p {
+        margin: 0.25rem 0 0;
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+
+      #map {
+        flex: 1;
+        min-height: 640px;
+      }
+
+      .leaflet-popup-content {
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+
+      .leaflet-popup-content ul {
+        margin: 0.5rem 0 0;
+        padding-left: 1.1rem;
+      }
+
+      .leaflet-popup-content li + li {
+        margin-top: 0.35rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="map-shell">
+      <div class="map-header">
+        <strong id="map-status">Loading career locations...</strong>
+        <p>Locations are grouped by shared address across education and work entries.</p>
+      </div>
+      <div id="map"></div>
+    </div>
+
+    <script>
+      const cvLocationEntries = [
+        {% for item in site.data.cv.education %}
+          {% if item.address %}
+        {
+          category: "Education",
+          name: {{ item.institution | jsonify }},
+          detail: {{ item.area | jsonify }},
+          address: {{ item.address | jsonify }}
+        },
+          {% endif %}
+        {% endfor %}
+        {% for item in site.data.cv.work %}
+          {% if item.address %}
+        {
+          category: "Work",
+          name: {{ item.company | jsonify }},
+          detail: {{ item.position | jsonify }},
+          address: {{ item.address | jsonify }}
+        },
+          {% endif %}
+        {% endfor %}
+      ];
+
+      const mapStatus = document.getElementById("map-status");
+      const map = L.map("map", { scrollWheelZoom: false }).setView([20, 0], 2);
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 18,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      const markerLayer = L.featureGroup().addTo(map);
+
+      function escapeHtml(text) {
+        return String(text)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#39;");
+      }
+
+      function groupEntriesByAddress(entries) {
+        const groups = new Map();
+
+        for (const entry of entries) {
+          if (!entry.address) {
+            continue;
+          }
+
+          if (!groups.has(entry.address)) {
+            groups.set(entry.address, {
+              address: entry.address,
+              items: []
+            });
+          }
+
+          groups.get(entry.address).items.push(entry);
+        }
+
+        return Array.from(groups.values());
+      }
+
+      function buildPopupContent(group) {
+        const itemMarkup = group.items
+          .map((item) => {
+            return `<li><strong>${escapeHtml(item.category)}:</strong> ${escapeHtml(item.name)}${item.detail ? `, ${escapeHtml(item.detail)}` : ""}</li>`;
+          })
+          .join("");
+
+        return `
+          <strong>${escapeHtml(group.address)}</strong>
+          <ul>${itemMarkup}</ul>
+        `;
+      }
+
+      async function geocodeAddress(address) {
+        const query = encodeURIComponent(address);
+        const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=${query}`;
+        const response = await fetch(url, {
+          headers: {
+            Accept: "application/json"
+          }
+        });
+
+        if (!response.ok) {
+          return null;
+        }
+
+        const results = await response.json();
+        if (!results.length) {
+          return null;
+        }
+
+        return [Number(results[0].lat), Number(results[0].lon)];
+      }
+
+      function pause(milliseconds) {
+        return new Promise((resolve) => {
+          window.setTimeout(resolve, milliseconds);
+        });
+      }
+
+      async function renderCvLocations() {
+        const groups = groupEntriesByAddress(cvLocationEntries);
+
+        if (!groups.length) {
+          mapStatus.textContent = "No mapped CV locations were found.";
+          return;
+        }
+
+        let mappedCount = 0;
+
+        for (const group of groups) {
+          mapStatus.textContent = `Geocoding ${group.address}...`;
+          const coordinates = await geocodeAddress(group.address);
+          if (!coordinates) {
+            continue;
+          }
+
+          const marker = L.marker(coordinates);
+          marker.bindPopup(buildPopupContent(group));
+          markerLayer.addLayer(marker);
+          mappedCount += 1;
+
+          // Keep the geocoding requests polite and predictable.
+          await pause(1000);
+        }
+
+        if (!mappedCount) {
+          mapStatus.textContent = "Locations were found in CV data, but none could be geocoded.";
+          return;
+        }
+
+        map.fitBounds(markerLayer.getBounds(), {
+          padding: [36, 36]
+        });
+        mapStatus.textContent = `Mapped ${mappedCount} unique CV locations.`;
+      }
+
+      renderCvLocations().catch(() => {
+        mapStatus.textContent = "The map could not load the CV locations.";
+      });
+    </script>
+  </body>
+</html>

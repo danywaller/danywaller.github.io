@@ -1,109 +1,75 @@
+#!/usr/bin/env python3
+"""Generate publication markdown files from a BibTeX source.
 
-# coding: utf-8
+This script is the single-file BibTeX entry point for the publication
+generator. It reads one `.bib` file, converts each entry into the site's
+publication front matter shape, and writes the markdown files into
+`../_publications`.
+"""
 
-# # Publications markdown generator for academicpages
-# 
-# Takes a TSV of publications with metadata and converts them for use with [academicpages.github.io](academicpages.github.io). This is an interactive Jupyter notebook, with the core python code in publications.py. Run either from the `markdown_generator` folder after replacing `publications.tsv` with one that fits your format.
-# 
-# TODO: Make this work with BibTex and other databases of citations, rather than Stuart's non-standard TSV format and citation style.
-# 
+from __future__ import annotations
 
-# ## Data format
-# 
-# The TSV needs to have the following columns: pub_date, title, venue, excerpt, citation, site_url, and paper_url, with a header at the top. 
-# 
-# - `excerpt` and `paper_url` can be blank, but the others must have values. 
-# - `pub_date` must be formatted as YYYY-MM-DD.
-# - `url_slug` will be the descriptive part of the .md file and the permalink URL for the page about the paper. The .md file will be `YYYY-MM-DD-[url_slug].md` and the permalink will be `https://[yourdomain]/publications/YYYY-MM-DD-[url_slug]`
+import argparse
+from pathlib import Path
 
-
-# ## Import pandas
-# 
-# We are using the very handy pandas library for dataframes.
-
-# In[2]:
-
-import pandas as pd
+from generator_utils import (
+    build_publication_markdown,
+    build_publication_record_from_bib_entry,
+    clean_value,
+    parse_bibtex_entries,
+    write_markdown,
+)
 
 
-# ## Import TSV
-# 
-# Pandas makes this easy with the read_csv function. We are using a TSV, so we specify the separator as a tab, or `\t`.
-# 
-# I found it important to put this data in a tab-separated values format, because there are a lot of commas in this kind of data and comma-separated values can get messed up. However, you can modify the import statement, as pandas also has read_excel(), read_json(), and others.
-
-# In[3]:
-
-publications = pd.read_csv("publications.tsv", sep="\t", header=0)
-publications
+SCRIPT_DIR = Path(__file__).resolve().parent
+DEFAULT_INPUT_PATH = SCRIPT_DIR / "output.bib"
+DEFAULT_OUTPUT_DIR = SCRIPT_DIR.parent / "_publications"
 
 
-# ## Escape special characters
-# 
-# YAML is very picky about how it takes a valid string, so we are replacing single and double quotes (and ampersands) with their HTML encoded equivilents. This makes them look not so readable in raw format, but they are parsed and rendered nicely.
-
-# In[4]:
-
-html_escape_table = {
-    "&": "&amp;",
-    '"': "&quot;",
-    "'": "&apos;"
-    }
-
-def html_escape(text):
-    """Produce entities within text."""
-    return "".join(html_escape_table.get(c,c) for c in text)
-
-
-# ## Creating the markdown files
-# 
-# This is where the heavy lifting is done. This loops through all the rows in the TSV dataframe, then starts to concatentate a big string (```md```) that contains the markdown for each type. It does the YAML metadata first, then does the description for the individual page. If you don't want something to appear (like the "Recommended citation")
-
-# In[5]:
-
-import os
-for row, item in publications.iterrows():
-    
-    md_filename = str(item.pub_date) + "-" + item.url_slug + ".md"
-    html_filename = str(item.pub_date) + "-" + item.url_slug
-    year = item.pub_date[:4]
-    
-    ## YAML variables
-    
-    md = "---\ntitle: \""   + item.title + '"\n'
-
-    # TODO Update to use the category assigned in the TSV file
-    md += """collection: manuscripts"""
-    
-    md += """\npermalink: /publication/""" + html_filename
-    
-    if len(str(item.excerpt)) > 5:
-        md += "\nexcerpt: '" + html_escape(item.excerpt) + "'"
-    
-    md += "\ndate: " + str(item.pub_date) 
-    
-    md += "\nvenue: '" + html_escape(item.venue) + "'"
-    
-    if len(str(item.paper_url)) > 5:
-        md += "\npaperurl: '" + item.paper_url + "'"
-    
-    md += "\ncitation: '" + html_escape(item.citation) + "'"
-    
-    md += "\n---"
-    
-    ## Markdown description for individual page
-    
-    if len(str(item.paper_url)) > 5:
-        md += "\n\n<a href='" + item.paper_url + "'>Download paper here</a>\n" 
-        
-    if len(str(item.excerpt)) > 5:
-        md += "\n" + html_escape(item.excerpt) + "\n"
-        
-    md += "\nRecommended citation: " + item.citation
-    
-    md_filename = os.path.basename(md_filename)
-       
-    with open("../_publications/" + md_filename, 'w') as f:
-        f.write(md)
+def parse_args():
+    """Parse command-line arguments."""
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "input_path",
+        nargs="?",
+        default=str(DEFAULT_INPUT_PATH),
+        help="Input BibTeX file. Defaults to markdown_generator/output.bib.",
+    )
+    parser.add_argument(
+        "--output-dir",
+        default=str(DEFAULT_OUTPUT_DIR),
+        help="Directory where markdown files should be written.",
+    )
+    return parser.parse_args()
 
 
+def generate_from_bibtex(input_path, output_dir):
+    """Generate publication markdown from a standard BibTeX file."""
+    for entry in parse_bibtex_entries(input_path):
+        try:
+            record = build_publication_record_from_bib_entry(entry)
+            md_filename, markdown = build_publication_markdown(record)
+            destination = write_markdown(output_dir, md_filename, markdown)
+            print(f"Wrote {destination.name}")
+        except KeyError as error:
+            title = clean_value(entry["fields"].get("title")) or entry["key"]
+            print(f"Skipped {title}: missing expected field {error}")
+
+
+def main():
+    """Run the generator."""
+    args = parse_args()
+    input_path = Path(args.input_path).expanduser().resolve()
+    output_dir = Path(args.output_dir).expanduser().resolve()
+
+    if not input_path.exists():
+        raise FileNotFoundError(f"Input file does not exist: {input_path}")
+
+    if input_path.suffix.lower() != ".bib":
+        raise ValueError("Publication generation now supports BibTeX input only.")
+
+    generate_from_bibtex(input_path, output_dir)
+
+
+if __name__ == "__main__":
+    main()

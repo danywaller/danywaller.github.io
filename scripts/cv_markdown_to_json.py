@@ -182,7 +182,8 @@ def parse_education(education_text):
                 "startDate": "",
                 "endDate": year.strip(),
                 "gpa": gpa,
-                "courses": []
+                "courses": [],
+                "address": ""
             })
     
     return education_entries
@@ -224,10 +225,53 @@ def parse_work_experience(work_text):
                 "startDate": start_date,
                 "endDate": end_date,
                 "summary": "",
-                "highlights": highlights
+                "highlights": highlights,
+                "address": ""
             })
     
     return work_entries
+
+def preserve_manual_fields(new_entries, existing_entries, key_fields, field_names):
+    """Copy selected manual fields from an existing JSON file when keys match."""
+    existing_by_key = {}
+
+    for entry in existing_entries:
+        key = tuple(entry.get(field, "") for field in key_fields)
+        existing_by_key[key] = entry
+
+    for entry in new_entries:
+        key = tuple(entry.get(field, "") for field in key_fields)
+        existing_entry = existing_by_key.get(key)
+        if not existing_entry:
+            continue
+
+        for field_name in field_names:
+            if existing_entry.get(field_name) and not entry.get(field_name):
+                entry[field_name] = existing_entry[field_name]
+
+def preserve_location_metadata(cv_json, output_file):
+    """Preserve manual address fields when regenerating the CV JSON file."""
+    if not os.path.exists(output_file):
+        return
+
+    try:
+        with open(output_file, 'r', encoding='utf-8') as file:
+            existing_cv = json.load(file)
+    except (OSError, json.JSONDecodeError):
+        return
+
+    preserve_manual_fields(
+        cv_json.get("education", []),
+        existing_cv.get("education", []),
+        ("institution", "area", "endDate"),
+        ("address",)
+    )
+    preserve_manual_fields(
+        cv_json.get("work", []),
+        existing_cv.get("work", []),
+        ("company", "position", "startDate", "endDate"),
+        ("address",)
+    )
 
 def parse_skills(skills_text):
     """Parse skills section from markdown."""
@@ -277,34 +321,35 @@ def parse_publications(pub_dir):
     
     return publications
 
-def parse_talks(talks_dir):
-    """Parse talks from the _talks directory."""
-    talks = []
+def parse_poems(poems_dir):
+    """Parse poems from the _poems directory."""
+    poems = []
     
-    if not os.path.exists(talks_dir):
-        return talks
+    if not os.path.exists(poems_dir):
+        return poems
     
-    for talk_file in sorted(glob.glob(os.path.join(talks_dir, "*.md"))):
-        with open(talk_file, 'r', encoding='utf-8') as file:
+    for poem_file in sorted(glob.glob(os.path.join(poems_dir, "*.md"))):
+        with open(poem_file, 'r', encoding='utf-8') as file:
             content = file.read()
         
         # Extract front matter
         front_matter_match = re.match(r'^---\s*(.*?)\s*---', content, re.DOTALL)
         if front_matter_match:
             front_matter = yaml.safe_load(front_matter_match.group(1))
+            poem_body = content[front_matter_match.end():].strip()
             
-            # Extract talk details
-            talk_entry = {
+            # Extract poem details
+            poem_entry = {
                 "name": front_matter.get('title', ''),
-                "event": front_matter.get('venue', ''),
+                "venue": front_matter.get('venue', ''),
                 "date": front_matter.get('date', ''),
-                "location": front_matter.get('location', ''),
-                "description": front_matter.get('excerpt', '')
+                "hyperlink": front_matter.get('hyperlink', ''),
+                "description": front_matter.get('excerpt', '') or poem_body
             }
             
-            talks.append(talk_entry)
+            poems.append(poem_entry)
     
-    return talks
+    return poems
 
 def parse_teaching(teaching_dir):
     """Parse teaching from the _teaching directory."""
@@ -389,8 +434,10 @@ def create_cv_json(md_file, config_file, repo_root, output_file):
     # Add publications
     cv_json["publications"] = parse_publications(os.path.join(repo_root, "_publications"))
     
-    # Add talks
-    cv_json["presentations"] = parse_talks(os.path.join(repo_root, "_talks"))
+    # Add poems. Keep the legacy presentations key populated so existing JSON
+    # consumers do not break if they still expect that name.
+    cv_json["poetry"] = parse_poems(os.path.join(repo_root, "_poems"))
+    cv_json["presentations"] = cv_json["poetry"]
     
     # Add teaching
     cv_json["teaching"] = parse_teaching(os.path.join(repo_root, "_teaching"))
@@ -404,6 +451,8 @@ def create_cv_json(md_file, config_file, repo_root, output_file):
     
     if 'interests' in config:
         cv_json["interests"] = config.get('interests', [])
+
+    preserve_location_metadata(cv_json, output_file)
     
     # Write the JSON to a file
     with open(output_file, 'w', encoding='utf-8') as file:
