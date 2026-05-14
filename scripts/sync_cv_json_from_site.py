@@ -1,7 +1,17 @@
 #!/usr/bin/env python3
-"""
-Script to convert markdown CV to JSON format
-Author: Yuan Chen
+"""Sync `_data/cv.json` from the site's source content.
+
+This script no longer does a simple one-file markdown-to-JSON conversion.
+It now combines several sources:
+
+- `_pages/cv.md` for work, education, and skills
+- `_config.yml` for author/profile data
+- generated content folders such as `_publications/`, `_poems/`, `_teaching/`,
+  and `_portfolio/`
+
+It also preserves a small set of manual fields that are intentionally edited
+directly in `_data/cv.json`, such as the address metadata used by the career
+map.
 """
 
 import os
@@ -12,6 +22,9 @@ import argparse
 from datetime import datetime, date
 from pathlib import Path
 import glob
+
+
+ALLOWED_POEM_TYPES = {"unpublished", "published", "submitted"}
 
 # Custom JSON encoder to handle date objects
 class DateTimeEncoder(json.JSONEncoder):
@@ -336,15 +349,31 @@ def parse_poems(poems_dir):
         front_matter_match = re.match(r'^---\s*(.*?)\s*---', content, re.DOTALL)
         if front_matter_match:
             front_matter = yaml.safe_load(front_matter_match.group(1))
-            poem_body = content[front_matter_match.end():].strip()
+            poem_type = str(front_matter.get('type', '')).strip().lower()
+            venue = front_matter.get('venue', '')
+            poem_date = front_matter.get('date', '')
+
+            if poem_type not in ALLOWED_POEM_TYPES:
+                raise ValueError(
+                    f"{os.path.basename(poem_file)} must use type unpublished, published, or submitted."
+                )
+
+            if poem_type == "published" and (not venue or not poem_date):
+                raise ValueError(
+                    f"{os.path.basename(poem_file)} is marked published and must include venue and date."
+                )
             
             # Extract poem details
             poem_entry = {
                 "name": front_matter.get('title', ''),
-                "venue": front_matter.get('venue', ''),
-                "date": front_matter.get('date', ''),
+                "collection": front_matter.get('collection', ''),
+                "poem_collection": front_matter.get('poem_collection', ''),
+                "type": poem_type,
+                "venue": venue,
+                "date": poem_date,
                 "hyperlink": front_matter.get('hyperlink', ''),
-                "description": front_matter.get('excerpt', '') or poem_body
+                "url": front_matter.get('permalink', ''),
+                "description": front_matter.get('excerpt', '')
             }
             
             poems.append(poem_entry)
@@ -410,7 +439,7 @@ def parse_portfolio(portfolio_dir):
     return portfolio
 
 def create_cv_json(md_file, config_file, repo_root, output_file):
-    """Create a JSON CV from markdown and other repository data."""
+    """Build the CV JSON payload from site content and write it to disk."""
     # Parse the markdown CV
     sections = parse_markdown_cv(md_file)
     
@@ -431,11 +460,12 @@ def create_cv_json(md_file, config_file, repo_root, output_file):
         "references": []
     }
     
-    # Add publications
+    # Pull collection-backed content into the JSON CV so the rendered CV can
+    # stay in sync with the rest of the site.
     cv_json["publications"] = parse_publications(os.path.join(repo_root, "_publications"))
     
-    # Add poems. Keep the legacy presentations key populated so existing JSON
-    # consumers do not break if they still expect that name.
+    # Keep the legacy presentations key populated so older JSON consumers do
+    # not break if they still expect that name.
     cv_json["poetry"] = parse_poems(os.path.join(repo_root, "_poems"))
     cv_json["presentations"] = cv_json["poetry"]
     
@@ -452,6 +482,8 @@ def create_cv_json(md_file, config_file, repo_root, output_file):
     if 'interests' in config:
         cv_json["interests"] = config.get('interests', [])
 
+    # Preserve manually maintained location fields before writing the refreshed
+    # JSON file back to disk.
     preserve_location_metadata(cv_json, output_file)
     
     # Write the JSON to a file
@@ -462,7 +494,9 @@ def create_cv_json(md_file, config_file, repo_root, output_file):
 
 def main():
     """Main function to parse arguments and run the conversion."""
-    parser = argparse.ArgumentParser(description='Convert markdown CV to JSON format')
+    parser = argparse.ArgumentParser(
+        description="Sync _data/cv.json from the site's markdown, config, and collection content."
+    )
     parser.add_argument('--input', '-i', required=True, help='Input markdown CV file')
     parser.add_argument('--output', '-o', required=True, help='Output JSON file')
     parser.add_argument('--config', '-c', help='Jekyll _config.yml file')

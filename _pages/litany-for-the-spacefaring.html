@@ -1,0 +1,14 @@
+---
+layout: archive
+title: "Litany for the Spacefaring"
+permalink: /poems/litany-for-the-spacefaring/
+author_profile: true
+poem_collection: "Litany for the Spacefaring"
+---
+
+<p>An incomplete collection of poems about the space missions I have worked on.</p>
+
+{% assign collection_poems = site.poems | where: "poem_collection", page.poem_collection %}
+{% for post in collection_poems reversed %}
+  {% include archive-single-poem.html %}
+{% endfor %}

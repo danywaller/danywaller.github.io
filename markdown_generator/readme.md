@@ -39,7 +39,9 @@ Common front matter fields:
 
 - `title`
 - `collection: poems`
-- `type: "Poem"`
+- `type: unpublished`, `published`, or `submitted`
+- `poem_collection: "Litany of the Spacefaring"` when the poem belongs on a collection subpage
+- `permalink: /poems/litany-of-the-spacefaring/maven/` when you want a nested poem URL
 - `hyperlink`
 - `venue`
 - `date`
@@ -48,6 +50,16 @@ Common front matter fields:
 
 If `hyperlink` is present, poem templates render it as a small `learn more`
 link in the poem subtitle rather than wrapping the poem title itself.
+
+`collection` should stay as `poems`, since that is the site-wide poem content
+type. `poem_collection` is optional and only describes the nested collection
+subpage. If `poem_collection` is omitted, the poem can live directly under
+`/poems/`. If it is present, create a matching collection page and use a nested
+poem permalink such as `/poems/litany-of-the-spacefaring/maven/`.
+
+Poems marked `published` must include both `venue` and `date`. The Poetry page
+lists collections, each collection subpage lists poem titles only, and the full
+poem body is reserved for the individual poem page.
 
 `image` should be a single filename from `/images/`.
 

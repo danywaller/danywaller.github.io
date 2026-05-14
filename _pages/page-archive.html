@@ -3,9 +3,11 @@ layout: archive
 title: "Page Archive"
 permalink: /page-archive/
 author_profile: false
+sitemap: false
 ---
 
 {% include base_path %}
-{% for post in site.pages %}
+{% assign public_pages = site.pages | where_exp: "item", "item.sitemap != false and item.title and item.url != '/page-archive/'" | sort: "url" %}
+{% for post in public_pages %}
   {% include archive-single.html %}
 {% endfor %}

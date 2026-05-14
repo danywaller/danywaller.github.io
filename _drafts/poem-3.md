@@ -1,7 +1,8 @@
 ---
 title: "Poem 3"
 collection: poems
-type: "Poem"
+type: submitted
+poem_collection: "Example Collection"
 hyperlink: https://ssel.montana.edu/projects/real.html
 ---
 

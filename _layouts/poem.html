@@ -30,10 +30,20 @@ layout: default
           {% if page.read_time %}
             <p class="page__meta"><i class="fa fa-clock" aria-hidden="true"></i> {% include read-time.html %}</p>
           {% endif %}
-          {% if page.venue or page.modified or page.date or page.hyperlink %}
+          {% if page.poem_collection or page.type or page.venue or page.modified or page.date or page.hyperlink %}
             {% assign show_meta_separator = false %}
             <p class="page__meta">
+              {% if page.poem_collection %}
+                <a href="{{ '/poems/' | append: (page.poem_collection | slugify) | append: '/' | relative_url }}">{{ page.poem_collection }}</a>
+                {% assign show_meta_separator = true %}
+              {% endif %}
+              {% if page.type %}
+                {% if show_meta_separator %} · {% endif %}
+                {{ page.type | capitalize }}
+                {% assign show_meta_separator = true %}
+              {% endif %}
               {% if page.venue %}
+                {% if show_meta_separator %} · {% endif %}
                 {{ page.venue }}
                 {% assign show_meta_separator = true %}
               {% endif %}
@@ -82,6 +92,26 @@ layout: default
           </div>
         {% endif %}
         {{ content }}
+        {% if page.type or page.venue or page.date %}
+          {% assign show_bottom_separator = false %}
+          <p class="poem__footer-note">
+            <em>
+              {% if page.type %}
+                {{ page.type | capitalize }}
+                {% assign show_bottom_separator = true %}
+              {% endif %}
+              {% if page.venue %}
+                {% if show_bottom_separator %} · {% endif %}
+                {{ page.venue }}
+                {% assign show_bottom_separator = true %}
+              {% endif %}
+              {% if page.date %}
+                {% if show_bottom_separator %} · {% endif %}
+                <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time>
+              {% endif %}
+            </em>
+          </p>
+        {% endif %}
       </section>
 
       <footer class="page__meta">

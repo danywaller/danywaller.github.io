@@ -68,7 +68,7 @@ MONTH_NAME_BY_NUMBER = {
 DEFAULT_PUBLICATION_COLLECTION = "publications"
 DEFAULT_PUBLICATION_CATEGORY = "manuscripts"
 DEFAULT_PUBLICATION_PERMALINK = "/publication/"
-DEFAULT_TALK_TYPE = "Poem"
+ALLOWED_POEM_TYPES = {"unpublished", "published", "submitted"}
 DEFAULT_BIBTEX_SOURCE = {
     "venuekey": "journal",
     "venue-pretext": "",
@@ -544,18 +544,28 @@ def build_talk_markdown(record):
     md_filename = f"{url_slug}.md"
 
     title = html_escape(record["title"])
-    talk_type = clean_value(record.get("type")) or DEFAULT_TALK_TYPE
+    poem_type = clean_value(record.get("type")).lower() or "unpublished"
+    poem_collection = clean_value(record.get("poem_collection"))
     hyperlink = clean_value(record.get("hyperlink")) or clean_value(record.get("talk_url"))
     venue = html_escape(record.get("venue"))
     talk_date = clean_value(record.get("date"))
     description = html_escape(record.get("description"))
 
+    if poem_type not in ALLOWED_POEM_TYPES:
+        raise ValueError("Poem type must be unpublished, published, or submitted.")
+
+    if poem_type == "published" and (not venue or not talk_date):
+        raise ValueError("Published poems must include both venue and date.")
+
     lines = [
         "---",
         f'title: "{title}"',
         "collection: poems",
-        f'type: "{talk_type}"',
+        f"type: {poem_type}",
     ]
+
+    if poem_collection:
+        lines.append(f'poem_collection: "{html_escape(poem_collection)}"')
 
     if hyperlink:
         lines.append(f"hyperlink: {hyperlink}")

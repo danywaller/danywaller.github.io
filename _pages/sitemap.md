@@ -7,31 +7,28 @@ author_profile: true
 
 {% include base_path %}
 
-A list of all the posts and pages found on the site. For you robots out there, there is an [XML version]({{ base_path }}/sitemap.xml) available for digesting as well.
+A list of the public pages and collections currently enabled on the site. For robots, there is also an [XML sitemap]({{ base_path }}/sitemap.xml).
+
+{% assign public_pages = site.pages | where_exp: "item", "item.sitemap != false and item.title and item.url != '/sitemap/'" | sort: "url" %}
+{% assign public_collections = site.collections | where_exp: "collection", "collection.output != false and collection.label != 'posts'" %}
 
 <h2>Pages</h2>
-{% for post in site.pages %}
-  {% include archive-single.html %}
-{% endfor %}
-
-<h2>Posts</h2>
-{% for post in site.posts %}
+{% for post in public_pages %}
   {% include archive-single.html %}
 {% endfor %}
 
 {% capture written_label %}'None'{% endcapture %}
 
-{% for collection in site.collections %}
-{% unless collection.output == false or collection.label == "posts" %}
-  {% capture label %}{{ collection.label }}{% endcapture %}
-  {% if label != written_label %}
+{% for collection in public_collections %}
+  {% assign public_docs = collection.docs | where_exp: "doc", "doc.sitemap != false" %}
+  {% if public_docs.size > 0 %}
+    {% capture label %}{{ collection.label }}{% endcapture %}
+    {% if label != written_label %}
   <h2>{{ label }}</h2>
-  {% capture written_label %}{{ label }}{% endcapture %}
-  {% endif %}
-{% endunless %}
-{% for post in collection.docs %}
-  {% unless collection.output == false or collection.label == "posts" %}
+      {% capture written_label %}{{ label }}{% endcapture %}
+    {% endif %}
+    {% for post in public_docs %}
   {% include archive-single.html %}
-  {% endunless %}
-{% endfor %}
+    {% endfor %}
+  {% endif %}
 {% endfor %}

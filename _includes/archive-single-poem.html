@@ -31,10 +31,15 @@
     {% if post.read_time %}
       <p class="page__meta"><i class="fa fa-clock" aria-hidden="true"></i> {% include read-time.html %}</p>
     {% endif %}
-    {% if post.venue or post.date or post.hyperlink %}
+    {% if post.type or post.venue or post.date or post.hyperlink %}
       {% assign show_meta_separator = false %}
       <p class="archive__item-excerpt" itemprop="description">
+        {% if post.type %}
+          {{ post.type | capitalize }}
+          {% assign show_meta_separator = true %}
+        {% endif %}
         {% if post.venue %}
+          {% if show_meta_separator %} · {% endif %}
           {{ post.venue }}
           {% assign show_meta_separator = true %}
         {% endif %}
@@ -49,6 +54,5 @@
         {% endif %}
       </p>
     {% endif %}
-    {% if post.excerpt %}<p class="archive__item-excerpt" itemprop="description">{{ post.excerpt | markdownify }}</p>{% endif %}
   </article>
 </div>

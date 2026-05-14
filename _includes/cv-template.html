@@ -291,10 +291,20 @@
           {% endif %}
         </div>
         <div class="cv-item-content">
-          {% if poem.venue or poem.hyperlink %}
+          {% if poem.poem_collection or poem.type or poem.venue or poem.hyperlink %}
           {% assign show_meta_separator = false %}
           <div class="cv-item-subtitle">
+            {% if poem.poem_collection %}
+            <a href="{{ '/poems/' | append: (poem.poem_collection | slugify) | append: '/' | relative_url }}">{{ poem.poem_collection }}</a>
+            {% assign show_meta_separator = true %}
+            {% endif %}
+            {% if poem.type %}
+            {% if show_meta_separator %} · {% endif %}
+            {{ poem.type | capitalize }}
+            {% assign show_meta_separator = true %}
+            {% endif %}
             {% if poem.venue %}
+            {% if show_meta_separator %} · {% endif %}
             {{ poem.venue }}
             {% assign show_meta_separator = true %}
             {% endif %}

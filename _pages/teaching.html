@@ -3,10 +3,12 @@ layout: archive
 title: "Teaching"
 permalink: /teaching/
 author_profile: true
+sitemap: false
 ---
 
 {% include base_path %}
 
-{% for post in site.teaching reversed %}
+{% assign public_teaching = site.teaching | where_exp: "item", "item.sitemap != false" %}
+{% for post in public_teaching reversed %}
   {% include archive-single.html %}
 {% endfor %}

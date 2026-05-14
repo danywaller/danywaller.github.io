@@ -92,7 +92,7 @@ publication_category:
 teaser                   :  # filename of teaser fallback teaser image placed in /images/ for social media previews
 breadcrumbs              : false # true, false (default)
 words_per_minute         : 160
-future                   : true
+future                   : false # keep scheduled/sample posts out of the live site by default
 read_more                : "disabled" # if enabled, adds "Read more" links to excerpts
 careermap_link          : true       # toggle the Career Map link in the header navigation
 comments:

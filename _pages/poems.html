@@ -5,6 +5,25 @@ permalink: /poems/
 author_profile: true
 ---
 
-{% for post in site.poems reversed %}
-  {% include archive-single-poem.html %}
+{% assign collection_groups = site.poems | group_by: "poem_collection" | sort: "name" %}
+{% assign standalone_poems = site.poems | where_exp: "poem", "poem.poem_collection == nil or poem.poem_collection == ''" %}
+
+{% for group in collection_groups %}
+  {% if group.name != "" %}
+    <div class="list__item">
+      <article class="archive__item">
+        <h2 class="archive__item-title">
+          <a href="{{ '/poems/' | append: (group.name | slugify) | append: '/' | relative_url }}">{{ group.name }}</a>
+        </h2>
+        <p class="archive__item-excerpt">{{ group.items | size }} poem{% if group.items.size != 1 %}s{% endif %}</p>
+      </article>
+    </div>
+  {% endif %}
 {% endfor %}
+
+{% if standalone_poems.size > 0 %}
+  <h2>Individual Poems</h2>
+  {% for post in standalone_poems reversed %}
+    {% include archive-single-poem.html %}
+  {% endfor %}
+{% endif %}

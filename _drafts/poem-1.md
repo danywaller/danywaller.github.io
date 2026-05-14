@@ -1,7 +1,8 @@
 ---
 title: "Poem 1"
 collection: poems
-type: "Poem"
+type: published
+poem_collection: "Example Collection"
 hyperlink: https://ssel.montana.edu/projects/real.html
 venue: "Ghost City Review"
 date: 2025-03-01

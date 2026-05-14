@@ -1,7 +1,7 @@
 ---
 title: "Poem 2"
 collection: poems
-type: "Poem"
+type: unpublished
 image: image17.jpg
 ---
 

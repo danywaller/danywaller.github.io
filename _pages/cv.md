@@ -3,6 +3,7 @@ layout: archive
 title: "CV"
 permalink: /cv/
 author_profile: true
+sitemap: false
 redirect_from:
   - /resume
 ---
@@ -43,19 +44,22 @@ Skills
 
 Publications
 ======
-  <ul>{% for post in site.publications reversed %}
+  {% assign public_publications = site.publications | where_exp: "item", "item.sitemap != false" %}
+  <ul>{% for post in public_publications reversed %}
     {% include archive-single-cv.html %}
   {% endfor %}</ul>
   
 Poetry
 ======
-  <ul>{% for post in site.poems reversed %}
+  {% assign public_poems = site.poems | where_exp: "item", "item.sitemap != false" %}
+  <ul>{% for post in public_poems reversed %}
     {% include archive-single-poem-cv.html %}
   {% endfor %}</ul>
   
 Teaching
 ======
-  <ul>{% for post in site.teaching reversed %}
+  {% assign public_teaching = site.teaching | where_exp: "item", "item.sitemap != false" %}
+  <ul>{% for post in public_teaching reversed %}
     {% include archive-single-cv.html %}
   {% endfor %}</ul>
   

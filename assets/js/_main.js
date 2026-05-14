@@ -3,10 +3,10 @@
    ========================================================================== */
 
 // Determine the expected state of the theme toggle, which can be "dark", "light", or
-// "system". Default is "system".
+// "system". Default is "dark" so first-time visitors land on dark mode.
 let determineThemeSetting = () => {
   let themeSetting = localStorage.getItem("theme");
-  return (themeSetting != "dark" && themeSetting != "light" && themeSetting != "system") ? "system" : themeSetting;
+  return (themeSetting != "dark" && themeSetting != "light" && themeSetting != "system") ? "dark" : themeSetting;
 };
 
 // Determine the computed theme, which can be "dark" or "light". If the theme setting is
@@ -16,26 +16,27 @@ let determineComputedTheme = () => {
   if (themeSetting != "system") {
     return themeSetting;
   }
-  return (userPref && userPref("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 };
 
-// detect OS/browser preference
-const browserPref = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+// Keep the browser chrome color in sync with the active site theme.
+let updateThemeColor = (theme) => {
+  $('meta[name="theme-color"]').attr("content", theme === "dark" ? "#111111" : "#ffffff");
+};
 
-// Set the theme on page load or when explicitly called
+// Set the theme on page load or when explicitly called. Without an explicit theme, use
+// the computed setting so the site defaults to dark instead of following the OS/browser.
 let setTheme = (theme) => {
-  const use_theme =
-    theme ||
-    localStorage.getItem("theme") ||
-    $("html").attr("data-theme") ||
-    browserPref;
+  const use_theme = theme === "system" ? determineComputedTheme() : (theme || determineComputedTheme());
 
   if (use_theme === "dark") {
     $("html").attr("data-theme", "dark");
     $("#theme-icon").removeClass("fa-sun").addClass("fa-moon");
+    updateThemeColor("dark");
   } else if (use_theme === "light") {
     $("html").removeAttr("data-theme");
     $("#theme-icon").removeClass("fa-moon").addClass("fa-sun");
+    updateThemeColor("light");
   }
 };
 
@@ -90,11 +91,11 @@ $(document).ready(function () {
   const scssLarge = 925;          // pixels, from /_sass/_themes.scss
   const scssMastheadHeight = 70;  // pixels, from the current theme (e.g., /_sass/theme/_default.scss)
 
-  // If the user hasn't chosen a theme, follow the OS preference
+  // Use the saved preference when present. Otherwise, keep dark mode as the default.
   setTheme();
   window.matchMedia('(prefers-color-scheme: dark)')
         .addEventListener("change", (e) => {
-          if (!localStorage.getItem("theme")) {
+          if (localStorage.getItem("theme") === "system") {
             setTheme(e.matches ? "dark" : "light");
           }
         });
