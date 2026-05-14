@@ -38,19 +38,10 @@
     </h2>
 
     {% if post.collection == 'publications' and post.author_summary %}
-      {% assign publication_pdf_url = "" %}
-      {% if post.category == 'conferences' %}
-        {% assign publication_external_url = post.external_url | default: post.paperurl %}
-        {% if publication_external_url contains '.pdf' or publication_external_url contains '/download/pdf' %}
-          {% assign publication_pdf_url = publication_external_url %}
-        {% endif %}
-      {% endif %}
       <p class="archive__item-excerpt" itemprop="description">
         {{ post.author_summary }}
         {% if post.doi %}
           <span> DOI: <a href="https://doi.org/{{ post.doi | uri_escape }}" target="_blank" rel="noopener noreferrer">{{ post.doi }}</a></span>
-        {% elsif publication_pdf_url != "" %}
-          <span> <a href="{{ publication_pdf_url }}" target="_blank" rel="noopener noreferrer">PDF</a></span>
         {% endif %}
       </p>
     {% endif %}

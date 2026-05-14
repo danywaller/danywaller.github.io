@@ -14,23 +14,33 @@ author_profile: true
 <!-- New style rendering if publication categories are defined -->
 {% if site.publication_category %}
   {% for category in site.publication_category  %}
-    {% assign title_shown = false %}
+    {% assign category_post_count = 0 %}
     {% for post in site.publications reversed %}
-      {% if post.category != category[0] %}
-        {% continue %}
+      {% if post.category == category[0] %}
+        {% assign category_post_count = category_post_count | plus: 1 %}
       {% endif %}
-      {% unless title_shown %}
-        <h2>{{ category[1].title }}</h2><hr />
-        {% assign title_shown = true %}
-      {% endunless %}
-      {% include archive-single.html %}
     {% endfor %}
+    {% if category_post_count > 0 %}
+      <details class="publication-category" open>
+        <summary>
+          <span class="publication-category__title">{{ category[1].title }}</span>
+          <span class="publication-category__count">{{ category_post_count }}</span>
+        </summary>
+        <div class="publication-category__items">
+          {% for post in site.publications reversed %}
+            {% if post.category != category[0] %}
+              {% continue %}
+            {% endif %}
+            {% include archive-single.html %}
+          {% endfor %}
+        </div>
+      </details>
+    {% endif %}
   {% endfor %}
 {% else %}
   {% for post in site.publications reversed %}
     {% include archive-single.html %}
   {% endfor %}
 {% endif %}
-
 
 

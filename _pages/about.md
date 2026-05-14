@@ -18,7 +18,7 @@ I also love creating open source software, writing poetry, and making memes. You
 ## GitHub Contributions
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github-contributions-widget.oxwazz.com/lunarswirls?theme=dark">
-  <source media="(prefers-color-scheme: light)" srcset="https://github-contributions-widget.oxwazz.com/lunarswirls">
-  <img alt="GitHub contributions for lunarswirls" src="https://github-contributions-widget.oxwazz.com/lunarswirls">
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.pumbas.net/api/contributions/lunarswirls?bgColour=161B22&colour=58A6FF&dotColour=30363D">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.pumbas.net/api/contributions/lunarswirls?colour=2F80ED&bgColour=F6F8FA&dotColour=D0D7DE">
+  <img alt="GitHub contributions for lunarswirls" src="https://github.pumbas.net/api/contributions/lunarswirls?colour=2F80ED&bgColour=F6F8FA&dotColour=D0D7DE">
 </picture>

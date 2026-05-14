@@ -115,11 +115,6 @@ BIBTEX_SOURCE_BY_ENTRY_TYPE = {
         "permalink_prefix": DEFAULT_PUBLICATION_PERMALINK,
     },
 }
-BAAS_BOOKTITLE_PREFIX_BY_MEETING = {
-    "55th annual meeting of the division for planetary sciences": "2023n8",
-}
-
-
 def clean_value(value):
     """Return a stripped string for a table or BibTeX value."""
     if value is None:
@@ -213,80 +208,6 @@ def build_primary_publication_url(fields):
     return ""
 
 
-def is_lpsc_proceeding(fields):
-    """Return true when a proceeding is from the Lunar and Planetary Science Conference."""
-    booktitle = normalize_bibtex_text(fields.get("booktitle"))
-    return "lunar and planetary science conference" in booktitle
-
-
-def build_lpsc_abstract_url(fields):
-    """Build the official LPSC abstract PDF URL when the needed fields are available."""
-    if not is_lpsc_proceeding(fields):
-        return ""
-
-    year = clean_value(fields.get("year"))
-    abstract_pages = clean_value(fields.get("pages"))
-    abstract_number_match = re.search(r"\d{3,4}", abstract_pages)
-    if not year.isdigit() or not abstract_number_match:
-        return ""
-
-    return (
-        f"https://www.hou.usra.edu/meetings/lpsc{year}/pdf/"
-        f"{abstract_number_match.group(0)}.pdf"
-    )
-
-
-def build_hou_meeting_pdf_url(fields):
-    """Build an official hou.usra.edu meeting PDF URL when the meeting is known."""
-    lpsc_url = build_lpsc_abstract_url(fields)
-    if lpsc_url:
-        return lpsc_url
-
-    booktitle = normalize_bibtex_text(fields.get("booktitle"))
-    meeting_slug = ""
-    if "lunar exploration analysis group" in booktitle:
-        meeting_slug = "leag"
-    elif "brines across the solar system" in booktitle:
-        meeting_slug = "ancientfuturebrines"
-
-    if not meeting_slug:
-        return ""
-
-    year = clean_value(fields.get("year"))
-    abstract_pages = clean_value(fields.get("pages"))
-    abstract_number_match = re.search(r"\d{3,4}", abstract_pages)
-    if not year.isdigit() or not abstract_number_match:
-        return ""
-
-    return (
-        f"https://www.hou.usra.edu/meetings/{meeting_slug}{year}/pdf/"
-        f"{abstract_number_match.group(0)}.pdf"
-    )
-
-
-def build_baas_download_pdf_url(fields):
-    """Build a BAAS direct PDF URL when the meeting metadata is recognized."""
-    booktitle = normalize_bibtex_text(fields.get("booktitle"))
-    prefix = BAAS_BOOKTITLE_PREFIX_BY_MEETING.get(booktitle)
-    if not prefix:
-        return ""
-
-    page_match = re.fullmatch(r"\s*(\d+)\.(\d+)\s*", clean_value(fields.get("pages")))
-    if not page_match:
-        return ""
-
-    session_number, presentation_number = page_match.groups()
-    return (
-        f"https://baas.aas.org/pub/{prefix}"
-        f"i{session_number}p{presentation_number}/download/pdf"
-    )
-
-
-def build_publisher_proceeding_url(fields):
-    """Build the best official publisher-hosted URL for a conference proceeding."""
-    return build_hou_meeting_pdf_url(fields) or build_baas_download_pdf_url(fields)
-
-
 def extract_ads_bibcode(entry):
     """Extract an ADS bibcode from the entry annotation or fallback key."""
     annotation = clean_value(entry["fields"].get("annotation"))
@@ -317,7 +238,7 @@ def build_publication_external_url(entry):
     entry_type = clean_value(entry.get("type")).lower()
 
     if entry_type in {"inproceedings", "conference", "proceedings"}:
-        return build_publisher_proceeding_url(fields) or primary_url or build_ads_abstract_url(entry)
+        return clean_value(fields.get("url")) or build_ads_abstract_url(entry)
 
     return primary_url
 
