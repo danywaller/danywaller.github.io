@@ -43,7 +43,7 @@
 ;
 
 .publication-category {
-  margin-bottom: 0.825em;
+  margin: 0;
 }
 
 .publication-category summary {
@@ -54,8 +54,8 @@
   font-weight: bold;
   gap: 0.5rem;
   list-style: none;
-  margin-top: 1.5em;
-  margin-bottom: 0.25rem;
+  margin-top: 2em;
+  margin-bottom: 0.825em;
   padding: 0.15rem 0;
 }
 
@@ -84,16 +84,34 @@
 }
 
 .publication-category__items {
-  border-top: 1px solid #e2e2e2;
-  padding-top: 1rem;
+  border-top: 0;
+  padding-top: 0;
+  padding-bottom: 2em;
+}
+
+.publication-category__items > .list__item {
+  margin-bottom: 0.425em;
+}
+
+.publication-category__items > .list__item:last-child {
+  margin-bottom: 0;
+}
+
+.publication-category__items .archive__item {
+  line-height: 1.6;
+}
+
+.publication-category__items .archive__item-title {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .publication-entry__meta {
   color: inherit;
   font-family: inherit;
   font-size: 1em;
-  line-height: 1.4;
-  margin-top: 0;
+  line-height: inherit;
+  margin: 0;
 }
 
 .publication-entry__meta a {
