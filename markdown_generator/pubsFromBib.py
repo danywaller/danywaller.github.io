@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Generate publication markdown files from one or more BibTeX sources.
+"""Generate publication markdown files from a mixed BibTeX source.
 
-This script remains as a compatibility entry point for workflows that keep
-separate BibTeX files for journals, proceedings, or books. It now shares the
-same markdown-building code as `publications.py`, so both BibTeX entry points
-produce the same front matter shape.
+This script mirrors the `PubsFromBib.ipynb` workflow: it reads a single mixed
+BibTeX file, lets the shared generator infer journal articles vs conference
+proceedings from each entry's BibTeX type, and writes publication markdown into
+`../_publications`.
 """
 
 from __future__ import annotations
@@ -24,23 +24,10 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 DEFAULT_OUTPUT_DIR = SCRIPT_DIR.parent / "_publications"
 
 
-# Each source can override the shared BibTeX defaults. The category field is
-# what the site uses to group publications on the archive page.
 publist = {
-    "proceeding": {
-        "file": "proceedings.bib",
-        "venuekey": "booktitle",
-        "venue-pretext": "In the proceedings of ",
+    "mixed": {
+        "file": "output.bib",
         "collection": "publications",
-        "category": "conferences",
-        "permalink_prefix": "/publication/",
-    },
-    "journal": {
-        "file": "pubs.bib",
-        "venuekey": "journal",
-        "venue-pretext": "",
-        "collection": "publications",
-        "category": "manuscripts",
         "permalink_prefix": "/publication/",
     },
 }
@@ -49,13 +36,15 @@ publist = {
 def generate_source(source_name, source_config, output_dir):
     """Generate markdown for a configured BibTeX source."""
     source_path = SCRIPT_DIR / source_config["file"]
+    record_config = {key: value for key, value in source_config.items() if key != "file"}
+
     if not source_path.exists():
         print(f"Skipped {source_name}: missing {source_path.name}")
         return
 
     for entry in parse_bibtex_entries(source_path):
         try:
-            record = build_publication_record_from_bib_entry(entry, source_config)
+            record = build_publication_record_from_bib_entry(entry, record_config)
             md_filename, markdown = build_publication_markdown(record)
             destination = write_markdown(output_dir, md_filename, markdown)
             print(f"Wrote {destination.name}")

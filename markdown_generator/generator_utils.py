@@ -150,6 +150,14 @@ def make_url_slug(value):
     return slug.replace("--", "-").strip("-")
 
 
+def make_short_title_slug(value, max_words=3):
+    """Create a short slug from the first few words of a title-like string."""
+    words = clean_value(strip_bibtex_markup(value)).split()
+    if max_words > 0:
+        words = words[:max_words]
+    return make_url_slug(" ".join(words))
+
+
 def normalize_month(value, default=""):
     """Normalise a BibTeX month field into a two-digit month string."""
     text = clean_value(value).strip("{}").lower()
@@ -182,25 +190,26 @@ def month_number_to_name(value):
 
 
 def build_bibtex_publication_dates(fields):
-    """Build stable filename and front matter dates from BibTeX fields.
+    """Build stable filename and display dates from BibTeX fields.
 
     The generated markdown keeps the existing numeric filename date format so
-    regenerated publication URLs do not churn. The front matter date uses the
-    full month name from the BibTeX entry and intentionally omits the day.
+    regenerated publication URLs do not churn. The Jekyll front matter date is
+    kept machine-readable, while a separate display label preserves the BibTeX
+    month and year for the publication templates.
     """
     pub_year = clean_value(fields.get("year")) or "1900"
     raw_month = clean_value(fields.get("month"))
     pub_month = normalize_month(raw_month, default="01")
 
     filename_date = f"{pub_year}-{pub_month}-01"
-    front_matter_date = pub_year
+    publication_date = pub_year
 
     if raw_month:
         month_name = month_number_to_name(pub_month)
         if month_name:
-            front_matter_date = f"{pub_year}-{month_name}"
+            publication_date = f"{month_name} {pub_year}"
 
-    return filename_date, front_matter_date
+    return filename_date, publication_date
 
 
 def write_markdown(output_dir, filename, content):
@@ -415,13 +424,14 @@ def build_publication_record_from_bib_entry(entry, source_config=None):
     fields = entry["fields"]
     config = get_bibtex_source_config(entry["type"], source_config)
 
-    pub_date, front_matter_date = build_bibtex_publication_dates(fields)
+    pub_date, publication_date = build_bibtex_publication_dates(fields)
     pub_year = clean_value(fields.get("year")) or "1900"
 
     title = strip_bibtex_markup(fields["title"])
     venue_key = config["venuekey"]
     venue = config["venue-pretext"] + strip_bibtex_markup(fields[venue_key])
     url_slug = make_url_slug(title)
+    file_slug = make_short_title_slug(title, max_words=3)
 
     author_names = entry.get("authors", [])
     if author_names:
@@ -438,7 +448,8 @@ def build_publication_record_from_bib_entry(entry, source_config=None):
         "bib_id": entry["key"],
         "title": title,
         "pub_date": pub_date,
-        "front_matter_date": front_matter_date,
+        "publication_date": publication_date,
+        "file_slug": file_slug,
         "url_slug": url_slug,
         "venue": venue,
         "citation": citation,
@@ -454,10 +465,11 @@ def build_publication_record_from_bib_entry(entry, source_config=None):
 def build_publication_markdown(record):
     """Build a publication markdown file from a normalised record."""
     pub_date = clean_value(record["pub_date"])
-    front_matter_date = clean_value(record.get("front_matter_date")) or pub_date
+    publication_date = clean_value(record.get("publication_date"))
+    file_slug = clean_value(record.get("file_slug")) or clean_value(record["url_slug"])
     url_slug = clean_value(record["url_slug"])
     html_filename = f"{pub_date}-{url_slug}".replace("--", "-")
-    md_filename = f"{html_filename}.md"
+    md_filename = f"{pub_date}-{file_slug}".replace("--", "-") + ".md"
 
     collection = clean_value(record.get("collection")) or DEFAULT_PUBLICATION_COLLECTION
     category = normalize_category(record.get("category"))
@@ -483,7 +495,8 @@ def build_publication_markdown(record):
 
     lines.extend(
         [
-            format_publication_date_front_matter(front_matter_date),
+            format_publication_date_front_matter(pub_date),
+            f'publication_date: "{publication_date}"',
             f"venue: '{venue}'",
         ]
     )
@@ -505,9 +518,6 @@ def build_publication_markdown(record):
     )
 
     body = []
-
-    if paper_url:
-        body.append(f'[Access paper here]({paper_url}){{:target="_blank"}}')
 
     if excerpt:
         body.append(excerpt)
@@ -531,11 +541,9 @@ def build_publication_markdown(record):
 
 
 def format_publication_date_front_matter(value):
-    """Format a publication date for YAML front matter."""
+    """Format a machine-readable publication date for YAML front matter."""
     text = clean_value(value)
-    if re.search(r"[A-Za-z]", text):
-        return f'date: "{text}"'
-    return f"date: {text}"
+    return f'date: "{text}"'
 
 
 def build_talk_markdown(record):
