@@ -5,7 +5,7 @@ category: manuscripts
 permalink: /publication/2025-02-01-Elliptical-ejecta-of-asteroid-Dimorphos-is-due-to-its-surface-curvature
 date: "2025-02-01"
 publication_date: "February 2025"
-author_summary: 'Masatoshi Hirabayashi, Sabina D. Raducan, Jessica M. Sunshine, et al.'
+author_summary: 'Masatoshi Hirabayashi, Sabina D. Raducan, Jessica M. Sunshine, ..., <strong>C. Dany Waller</strong>, et al.'
 venue: 'Nature Communications'
 doi: '10.1038/s41467-025-56010-w'
 paperurl: 'https://doi.org/10.1038/s41467-025-56010-w'

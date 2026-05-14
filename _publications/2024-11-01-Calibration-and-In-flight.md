@@ -5,7 +5,7 @@ category: manuscripts
 permalink: /publication/2024-11-01-Calibration-and-In-flight-Performance-of-DARTs-Didymos-Reconnaissance-and-Asteroid-Camera-for-OpNav-DRACO
 date: "2024-11-01"
 publication_date: "November 2024"
-author_summary: 'Carolyn M. Ernst, R. Terik Daly, Zachary J. Fletcher, et al.'
+author_summary: 'Carolyn M. Ernst, R. Terik Daly, Zachary J. Fletcher, ..., <strong>C. Dany Waller</strong>, et al.'
 venue: 'The Planetary Science Journal'
 doi: '10.3847/psj/ad823a'
 paperurl: 'https://doi.org/10.3847/psj/ad823a'

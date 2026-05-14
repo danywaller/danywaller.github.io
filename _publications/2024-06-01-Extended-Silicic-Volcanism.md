@@ -5,7 +5,7 @@ category: manuscripts
 permalink: /publication/2024-06-01-Extended-Silicic-Volcanism-in-the-Gruithuisen-RegionRevisiting-the-Composition-and-Thermophysical-Properties-of-Gruithuisen-Domes-on-the-Moon
 date: "2024-06-01"
 publication_date: "June 2024"
-author_summary: 'Nandita Kumari, Timothy D. Glotch, Jean-Pierre Williams, et al.'
+author_summary: 'Nandita Kumari, Timothy D. Glotch, Jean-Pierre Williams, ..., <strong>Dany Waller</strong>, et al.'
 venue: 'The Planetary Science Journal'
 doi: '10.3847/psj/ad4352'
 paperurl: 'https://doi.org/10.3847/psj/ad4352'

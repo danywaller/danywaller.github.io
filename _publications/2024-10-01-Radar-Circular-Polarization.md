@@ -5,7 +5,7 @@ category: manuscripts
 permalink: /publication/2024-10-01-Radar-Circular-Polarization-Ratio-of-Near-Earth-Asteroids-Links-to-Spectral-Taxonomy-and-Surface-Processes
 date: "2024-10-01"
 publication_date: "October 2024"
-author_summary: 'Edgard G. Rivera-Valentín, Betzaida Aponte-Hernández, Patrick A. Taylor, et al.'
+author_summary: 'Edgard G. Rivera-Valentín, Betzaida Aponte-Hernández, Patrick A. Taylor, ..., <strong>Dany Waller</strong>, et al.'
 venue: 'The Planetary Science Journal'
 doi: '10.3847/PSJ/ad7df1'
 paperurl: 'https://doi.org/10.3847/PSJ/ad7df1'

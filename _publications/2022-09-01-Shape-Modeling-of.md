@@ -5,7 +5,7 @@ category: manuscripts
 permalink: /publication/2022-09-01-Shape-Modeling-of-Dimorphos-for-the-Double-Asteroid-Redirection-Test-DART
 date: "2022-09-01"
 publication_date: "September 2022"
-author_summary: 'R. Terik Daly, Carolyn M. Ernst, Olivier S. Barnouin, et al.'
+author_summary: 'R. Terik Daly, Carolyn M. Ernst, Olivier S. Barnouin, ..., <strong>Dany Waller</strong>, et al.'
 venue: 'The Planetary Science Journal'
 doi: '10.3847/psj/ac7523'
 paperurl: 'https://doi.org/10.3847/psj/ac7523'

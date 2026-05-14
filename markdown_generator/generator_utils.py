@@ -70,6 +70,14 @@ DEFAULT_PUBLICATION_COLLECTION = "publications"
 DEFAULT_PUBLICATION_CATEGORY = "manuscripts"
 DEFAULT_PUBLICATION_PERMALINK = "/publication/"
 ALLOWED_POEM_TYPES = {"unpublished", "published", "submitted"}
+SITE_AUTHOR_KEYS = {
+    "cdwaller",
+    "cdanywaller",
+    "dcwaller",
+    "danycwaller",
+    "danywaller",
+    "dwaller",
+}
 DEFAULT_BIBTEX_SOURCE = {
     "venuekey": "journal",
     "venue-pretext": "",
@@ -243,15 +251,47 @@ def build_publication_external_url(entry):
     return primary_url
 
 
+def normalize_author_key(value):
+    """Normalize an author name for variant matching."""
+    return re.sub(r"[^a-z]", "", strip_bibtex_markup(value).lower())
+
+
+def is_site_author_name(value):
+    """Return true when an author name matches the site owner's name variants."""
+    return normalize_author_key(value) in SITE_AUTHOR_KEYS
+
+
+def format_author_name(value):
+    """Wrap the site owner's name in bold while leaving other names untouched."""
+    author_name = clean_value(value)
+    if not author_name:
+        return ""
+
+    if is_site_author_name(author_name):
+        return f"<strong>{author_name}</strong>"
+
+    return author_name
+
+
 def build_author_summary(author_names, max_authors=3):
     """Build a short author list ending in et al. when truncated."""
     clean_authors = [clean_value(author) for author in author_names if clean_value(author)]
     if not clean_authors:
         return ""
 
+    site_author_index = next(
+        (index for index, author in enumerate(clean_authors) if is_site_author_name(author)),
+        None,
+    )
     visible_authors = clean_authors[:max_authors]
-    summary = ", ".join(visible_authors)
-    if len(clean_authors) > max_authors:
+    summary = ", ".join(format_author_name(author) for author in visible_authors)
+    if len(clean_authors) <= max_authors:
+        return summary
+
+    if site_author_index is not None and site_author_index >= max_authors:
+        highlighted_author = format_author_name(clean_authors[site_author_index])
+        summary += f", ..., {highlighted_author}, et al."
+    else:
         summary += ", et al."
 
     return summary

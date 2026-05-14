@@ -5,7 +5,7 @@ category: manuscripts
 permalink: /publication/2022-08-01-Ultraviolet-and-magnetic-perspectives-at-Reiner-Gamma-and-the-implications-for-solar-wind-weathering
 date: "2022-08-01"
 publication_date: "August 2022"
-author_summary: 'C. D. Waller, J. T. S. Cahill, K.D. Retherford, et al.'
+author_summary: '<strong>C. D. Waller</strong>, J. T. S. Cahill, K.D. Retherford, et al.'
 venue: 'Frontiers in Astronomy and Space Sciences'
 doi: '10.3389/fspas.2022.926018'
 paperurl: 'https://doi.org/10.3389/fspas.2022.926018'

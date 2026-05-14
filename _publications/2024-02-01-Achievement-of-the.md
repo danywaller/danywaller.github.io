@@ -5,7 +5,7 @@ category: manuscripts
 permalink: /publication/2024-02-01-Achievement-of-the-Planetary-Defense-Investigations-of-the-Double-Asteroid-Redirection-Test-DART-Mission
 date: "2024-02-01"
 publication_date: "February 2024"
-author_summary: 'Nancy L. Chabot, Andrew S. Rivkin, Andrew F. Cheng, et al.'
+author_summary: 'Nancy L. Chabot, Andrew S. Rivkin, Andrew F. Cheng, ..., <strong>C. Dany Waller</strong>, et al.'
 venue: 'The Planetary Science Journal'
 doi: '10.3847/psj/ad16e6'
 paperurl: 'https://doi.org/10.3847/psj/ad16e6'

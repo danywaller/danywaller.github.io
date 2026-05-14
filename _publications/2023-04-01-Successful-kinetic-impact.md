@@ -5,7 +5,7 @@ category: manuscripts
 permalink: /publication/2023-04-01-Successful-kinetic-impact-into-an-asteroid-for-planetary-defence
 date: "2023-04-01"
 publication_date: "April 2023"
-author_summary: 'R. Terik Daly, Carolyn M. Ernst, Olivier S. Barnouin, et al.'
+author_summary: 'R. Terik Daly, Carolyn M. Ernst, Olivier S. Barnouin, ..., <strong>C. Dany Waller</strong>, et al.'
 venue: 'Nature'
 doi: '10.1038/s41586-023-05810-5'
 paperurl: 'https://doi.org/10.1038/s41586-023-05810-5'

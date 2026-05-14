@@ -5,7 +5,7 @@ category: manuscripts
 permalink: /publication/2024-08-01-Science-Product-Pipelines-and-Archive-Architecture-for-the-DART-Mission
 date: "2024-08-01"
 publication_date: "August 2024"
-author_summary: 'C. Dany Waller, Raymond C. Espiritu, Calley Tinsman, et al.'
+author_summary: '<strong>C. Dany Waller</strong>, Raymond C. Espiritu, Calley Tinsman, et al.'
 venue: 'The Planetary Science Journal'
 doi: '10.3847/PSJ/ad5959'
 paperurl: 'https://doi.org/10.3847/PSJ/ad5959'
