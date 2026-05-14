@@ -33,7 +33,8 @@
       {% assign show_meta_separator = false %}
       <p class="archive__item-excerpt" itemprop="description">
         {% if post.poem_collection %}
-          <a href="{{ '/poems/' | append: (post.poem_collection | slugify) | append: '/' | relative_url }}">{{ post.poem_collection }}</a>
+          {% assign poem_collection_slug = post.poem_collection | slugify %}
+          <a href="{{ '/poems/' | append: poem_collection_slug | append: '/' | relative_url }}">{{ post.poem_collection }}</a>
           {% assign show_meta_separator = true %}
         {% endif %}
         {% if post.type %}

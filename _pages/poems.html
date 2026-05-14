@@ -13,7 +13,8 @@ author_profile: true
     <div class="list__item">
       <article class="archive__item">
         <h2 class="archive__item-title">
-          <a href="{{ '/poems/' | append: (group.name | slugify) | append: '/' | relative_url }}">{{ group.name }}</a>
+          {% assign group_slug = group.name | slugify %}
+          <a href="{{ '/poems/' | append: group_slug | append: '/' | relative_url }}">{{ group.name }}</a>
         </h2>
         <p class="archive__item-excerpt">{{ group.items | size }} poem{% if group.items.size != 1 %}s{% endif %}</p>
       </article>

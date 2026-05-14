@@ -34,7 +34,8 @@ layout: default
             {% assign show_meta_separator = false %}
             <p class="page__meta">
               {% if page.poem_collection %}
-                <a href="{{ '/poems/' | append: (page.poem_collection | slugify) | append: '/' | relative_url }}">{{ page.poem_collection }}</a>
+                {% assign poem_collection_slug = page.poem_collection | slugify %}
+                <a href="{{ '/poems/' | append: poem_collection_slug | append: '/' | relative_url }}">{{ page.poem_collection }}</a>
                 {% assign show_meta_separator = true %}
               {% endif %}
               {% if page.type %}
