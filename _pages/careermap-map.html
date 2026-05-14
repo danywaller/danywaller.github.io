@@ -100,6 +100,15 @@ sitemap: false
         {% endfor %}
       ];
 
+      const knownCoordinatesByAddress = {
+        "Umeå, Sweden, 901 87": [63.820556, 20.303611],
+        "Baltimore, Maryland, USA, 21218": [39.32606, -76.62252],
+        "Lexington, Kentucky, USA, 40506": [38.0362, -84.5050],
+        "Laurel, Maryland, USA, 20723": [39.160709, -76.897858],
+        "Greenbelt, Maryland, USA, 20771": [38.9974, -76.8530],
+        "Lexington, Kentucky, USA, 40508": [38.04878, -84.48866]
+      };
+
       const mapStatus = document.getElementById("map-status");
       const map = L.map("map", { scrollWheelZoom: false }).setView([20, 0], 2);
 
@@ -155,24 +164,37 @@ sitemap: false
       }
 
       async function geocodeAddress(address) {
-        const query = encodeURIComponent(address);
-        const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=${query}`;
-        const response = await fetch(url, {
-          headers: {
-            Accept: "application/json"
+        if (knownCoordinatesByAddress[address]) {
+          return knownCoordinatesByAddress[address];
+        }
+
+        const simplifiedAddress = address
+          .replace(/,\s*\d{5}(?:-\d{4})?$/, "")
+          .replace(/,\s*\d{3}\s?\d{2}$/, "");
+        const queries = simplifiedAddress === address ? [address] : [address, simplifiedAddress];
+
+        for (const queryText of queries) {
+          const query = encodeURIComponent(queryText);
+          const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=${query}`;
+          const response = await fetch(url, {
+            headers: {
+              Accept: "application/json"
+            }
+          });
+
+          if (!response.ok) {
+            continue;
           }
-        });
 
-        if (!response.ok) {
-          return null;
+          const results = await response.json();
+          if (!results.length) {
+            continue;
+          }
+
+          return [Number(results[0].lat), Number(results[0].lon)];
         }
 
-        const results = await response.json();
-        if (!results.length) {
-          return null;
-        }
-
-        return [Number(results[0].lat), Number(results[0].lon)];
+        return null;
       }
 
       function pause(milliseconds) {
