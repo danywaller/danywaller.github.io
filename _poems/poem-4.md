@@ -5,6 +5,7 @@ type: unpublished
 poem_collection: "Litany for the Spacefaring"
 permalink: /poems/litany-for-the-spacefaring/real/
 hyperlink: https://ssel.montana.edu/projects/real.html
+date: 2026-05-14 15:54:24 +0200
 ---
 
 Patron saint of small bodies with dangerous errands,

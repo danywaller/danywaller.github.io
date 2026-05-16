@@ -5,6 +5,7 @@ type: unpublished
 poem_collection: "Litany for the Spacefaring"
 permalink: /poems/litany-for-the-spacefaring/lvis/
 hyperlink: https://lvis.gsfc.nasa.gov/Home/index.html
+date: 2026-05-14 15:57:35 +0200
 ---
 
 Patron saint of crevasse and hidden contour,

@@ -3,6 +3,7 @@ title: "Asteroid Morning"
 collection: poems
 type: unpublished
 permalink: /poems/asteroid-morning/
+date: 2026-05-14 17:33:43 +0200
 ---
 
 Maybe it came first as light.

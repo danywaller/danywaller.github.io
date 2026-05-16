@@ -56,10 +56,23 @@ bundle config set --local path 'vendor/bundle'
 bundle install
 ```
 
-Start the site locally:
+Start the site locally with the helper script:
 
 ```bash
-bundle exec jekyll serve -l -H localhost
+./preview.sh
+```
+
+This script:
+
+- prefers a Homebrew Ruby install when available
+- configures Bundler to use `vendor/bundle`
+- runs `bundle install`
+- starts `jekyll serve` at `http://localhost:4000`
+
+If you prefer to run Jekyll directly, the equivalent command is:
+
+```bash
+bundle exec jekyll serve -H localhost
 ```
 
 If you are running on Linux, you may also need:

@@ -7,7 +7,7 @@ redirect_from:
   - /about.html
 ---
 
-Welcome to my website! Here you can find my <a href="https://danywaller.github.io/files/CV.pdf" download="Waller_CV.pdf">CV</a>, links to my social media accounts, and other fun things I make such as scientific visualizations and poems.
+Welcome to my website! Here you can find my <a href="https://danywaller.github.io/files/CV.pdf" target="_blank" rel="noopener">CV</a>, links to my social media accounts, and other fun things I make such as scientific visualizations and poems.
 
 I'm currently a PhD student at Umeå University working with Dr. Shahab Fatemi on Hermean magnetosphere dynamics and lunar crustal magnetic anomalies. My interests are magnetic fields throughout the solar system: how to measure them, how to model them, and how to visualize them.
 

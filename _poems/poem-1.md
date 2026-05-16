@@ -5,6 +5,7 @@ type: unpublished
 poem_collection: "Litany for the Spacefaring"
 permalink: /poems/litany-for-the-spacefaring/maven/
 hyperlink: https://science.nasa.gov/mission/maven/
+date: 2026-05-14 15:55:51 +0200
 ---
 
 Patron saint of vanished weather and red grief,

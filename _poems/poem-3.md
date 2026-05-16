@@ -5,6 +5,7 @@ type: unpublished
 poem_collection: "Litany for the Spacefaring"
 permalink: /poems/litany-for-the-spacefaring/lro/
 hyperlink: https://science.nasa.gov/mission/lro/
+date: 2026-05-14 16:11:33 +0200
 ---
 
 Patron saint of slow seasons and sharp clarity,

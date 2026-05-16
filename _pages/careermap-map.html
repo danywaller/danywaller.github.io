@@ -65,6 +65,7 @@ sitemap: false
       .leaflet-popup-content li + li {
         margin-top: 0.35rem;
       }
+
     </style>
   </head>
   <body>
@@ -109,8 +110,43 @@ sitemap: false
         "Lexington, Kentucky, USA, 40508": [38.04878, -84.48866]
       };
 
+      const fieldWorkLocations = [
+        {
+          name: "San Francisco volcanic field, Arizona",
+          coordinates: [35.347, -111.678],
+          description: "Field work: Magnetic and ground penetrating radar sounding with the Mini-RF Team (May 2025)."
+        },
+        {
+          name: "Meteor Crater, Arizona",
+          coordinates: [35.0333, -111.0167],
+          description: "Field work: Magnetic and ground penetrating radar sounding with the Mini-RF Team (May 2025)."
+        },
+        {
+          name: "MacAdam Student Observatory, 301 Hilltop Ave, Lexington, KY 40506",
+          coordinates: [38.034028, -84.50375],
+          description: "Field work: Exoplanet light curve and lunar spectroscopic observations for PHY-395 Independent Work in Physics at the University of Kentucky MacAdam Student Observatory (Fall 2017)."
+        },
+        {
+          name: "University of Kentucky, 121 Washington Ave, Lexington, KY 40508, United States",
+          address: "121 Washington Ave, Lexington, KY 40508, United States",
+          description: "Field work: Electromagnetic sounding and gravimetry for EES-550 Fundamental Geophysics and EES-395 Special Topics in Geology: Gravity and Magnetics at the University of Kentucky (Fall 2018)."
+        },
+        {
+          name: "APL Magnetics Testing Facility, Laurel, Maryland",
+          coordinates: [39.169222, -76.890194],
+          description: "Field work: Magnetometer field testing, Magnetics Testing Facility manager, and related lab work at JHU/APL (2023-2025)."
+        }
+      ];
+
       const mapStatus = document.getElementById("map-status");
-      const map = L.map("map", { scrollWheelZoom: false }).setView([20, 0], 2);
+      const map = L.map("map", {
+        scrollWheelZoom: false,
+        dragging: false,
+        touchZoom: false,
+        doubleClickZoom: false,
+        boxZoom: false,
+        keyboard: false
+      }).setView([20, 0], 2);
 
       L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
         subdomains: "abcd",
@@ -119,6 +155,101 @@ sitemap: false
       }).addTo(map);
 
       const markerLayer = L.featureGroup().addTo(map);
+      const purpleFieldWorkIcon = L.icon({
+        iconUrl: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="41" viewBox="0 0 25 41">
+            <path fill="#7c3aed" stroke="#5b21b6" stroke-width="1.25" d="M12.5 0.75C6.01 0.75 0.75 5.96 0.75 12.39c0 8.38 9.6 16.84 11.06 28.58a.7.7 0 0 0 1.38 0C14.65 29.23 24.25 20.77 24.25 12.39 24.25 5.96 18.99.75 12.5.75z"/>
+            <circle cx="12.5" cy="12.5" r="5.1" fill="#ffffff"/>
+          </svg>
+        `)}`,
+        shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41],
+        shadowAnchor: [13, 41]
+      });
+      const mapContainer = map.getContainer();
+      let mapInteractionEnabled = false;
+      let lastGestureScale = null;
+
+      function setMapInteractionState(isEnabled) {
+        mapInteractionEnabled = isEnabled;
+
+        if (isEnabled) {
+          map.scrollWheelZoom.enable();
+          map.dragging.enable();
+          map.touchZoom.enable();
+          map.doubleClickZoom.enable();
+          map.boxZoom.enable();
+          map.keyboard.enable();
+          return;
+        }
+
+        map.scrollWheelZoom.disable();
+        map.dragging.disable();
+        map.touchZoom.disable();
+        map.doubleClickZoom.disable();
+        map.boxZoom.disable();
+        map.keyboard.disable();
+        lastGestureScale = null;
+      }
+
+      window.addEventListener("message", (event) => {
+        if (event.origin !== window.location.origin) {
+          return;
+        }
+
+        if (event.data && event.data.type === "careermap-interaction") {
+          setMapInteractionState(Boolean(event.data.active));
+        }
+      });
+
+      mapContainer.addEventListener("wheel", (event) => {
+        if (!mapInteractionEnabled) {
+          return;
+        }
+
+        if (event.ctrlKey) {
+          event.preventDefault();
+        }
+      }, { passive: false });
+
+      mapContainer.addEventListener("gesturestart", (event) => {
+        if (!mapInteractionEnabled) {
+          return;
+        }
+
+        event.preventDefault();
+        lastGestureScale = event.scale;
+      }, { passive: false });
+
+      mapContainer.addEventListener("gesturechange", (event) => {
+        if (!mapInteractionEnabled) {
+          return;
+        }
+
+        event.preventDefault();
+
+        if (lastGestureScale === null) {
+          lastGestureScale = event.scale;
+          return;
+        }
+
+        const scaleDelta = event.scale - lastGestureScale;
+        if (Math.abs(scaleDelta) < 0.08) {
+          return;
+        }
+
+        const zoomStep = scaleDelta > 0 ? 1 : -1;
+        const containerPoint = map.mouseEventToContainerPoint(event);
+        map.setZoomAround(containerPoint, map.getZoom() + zoomStep);
+        lastGestureScale = event.scale;
+      }, { passive: false });
+
+      mapContainer.addEventListener("gestureend", () => {
+        lastGestureScale = null;
+      });
 
       function escapeHtml(text) {
         return String(text)
@@ -163,6 +294,43 @@ sitemap: false
         `;
       }
 
+      function buildFieldWorkPopup(location) {
+        return `
+          <strong>${escapeHtml(location.name)}</strong>
+          <ul><li>${escapeHtml(location.description)}</li></ul>
+        `;
+      }
+
+      async function renderFieldWorkLocations() {
+        let mappedCount = 0;
+
+        for (const location of fieldWorkLocations) {
+          let coordinates = location.coordinates;
+
+          if (!coordinates && location.address) {
+            mapStatus.textContent = `Geocoding ${location.address}...`;
+            coordinates = await geocodeAddress(location.address);
+          }
+
+          if (!coordinates) {
+            continue;
+          }
+
+          const marker = L.marker(coordinates, {
+            icon: purpleFieldWorkIcon
+          });
+          marker.bindPopup(buildFieldWorkPopup(location));
+          markerLayer.addLayer(marker);
+          mappedCount += 1;
+
+          if (location.address) {
+            await pause(1000);
+          }
+        }
+
+        return mappedCount;
+      }
+
       async function geocodeAddress(address) {
         if (knownCoordinatesByAddress[address]) {
           return knownCoordinatesByAddress[address];
@@ -204,9 +372,10 @@ sitemap: false
       }
 
       async function renderCvLocations() {
+        const fieldWorkCount = await renderFieldWorkLocations();
         const groups = groupEntriesByAddress(cvLocationEntries);
 
-        if (!groups.length) {
+        if (!groups.length && !fieldWorkCount) {
           mapStatus.textContent = "No mapped CV locations were found.";
           return;
         }
@@ -229,7 +398,7 @@ sitemap: false
           await pause(1000);
         }
 
-        if (!mappedCount) {
+        if (!mappedCount && !fieldWorkCount) {
           mapStatus.textContent = "Locations were found in CV data, but none could be geocoded.";
           return;
         }
@@ -237,7 +406,13 @@ sitemap: false
         map.fitBounds(markerLayer.getBounds(), {
           padding: [36, 36]
         });
-        mapStatus.textContent = `Here are places I have been: ${mappedCount} unique locations.`;
+        if (mappedCount && fieldWorkCount) {
+          mapStatus.textContent = `Here are places I have been: ${mappedCount} career locations and ${fieldWorkCount} field work sites.`;
+        } else if (fieldWorkCount) {
+          mapStatus.textContent = `Here are places I have been: ${fieldWorkCount} field work sites.`;
+        } else {
+          mapStatus.textContent = `Here are places I have been: ${mappedCount} unique locations.`;
+        }
       }
 
       renderCvLocations().catch(() => {

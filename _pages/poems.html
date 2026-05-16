@@ -14,25 +14,30 @@ author_profile: true
 {% endfor %}
 
 <h2>Collections</h2>
-{% for group in collection_groups %}
-  {% if group.name != "" %}
-    <div class="list__item">
-      <article class="archive__item">
-        <h2 class="archive__item-title">
-          {% assign group_slug = group.name | slugify %}
-          <a href="{{ '/poems/' | append: group_slug | append: '/' | relative_url }}">{{ group.name }}</a>
-        </h2>
-        <p class="archive__item-excerpt">{{ group.items | size }} poem{% if group.items.size != 1 %}s{% endif %}</p>
-      </article>
-    </div>
-  {% endif %}
+<div class="poetry-section">
+  {% for group in collection_groups %}
+    {% if group.name != "" %}
+      <div class="list__item">
+        <article class="archive__item">
+          <h2 class="archive__item-title">
+            {% assign group_slug = group.name | slugify %}
+            <a href="{{ '/poems/' | append: group_slug | append: '/' | relative_url }}">{{ group.name }}</a>
+          </h2>
+          <p class="archive__item-excerpt">{{ group.items | size }} poem{% if group.items.size != 1 %}s{% endif %}</p>
+        </article>
+      </div>
+    {% endif %}
 {% endfor %}
+</div>
 
 {% if standalone_poem_count > 0 %}
+  <hr class="poetry-divider">
   <h2>Individual Poems</h2>
-  {% for post in site.poems reversed %}
-    {% if post.poem_collection == nil or post.poem_collection == '' %}
-      {% include archive-single-poem.html %}
-    {% endif %}
-  {% endfor %}
+  <div class="poetry-section">
+    {% for post in site.poems reversed %}
+      {% if post.poem_collection == nil or post.poem_collection == '' %}
+        {% include archive-single-poem.html %}
+      {% endif %}
+    {% endfor %}
+  </div>
 {% endif %}
