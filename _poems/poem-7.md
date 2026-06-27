@@ -8,7 +8,7 @@ hyperlink: https://science.nasa.gov/mission/messenger/
 date: 2026-06-27 16:53:33 +0200
 ---
 
-Patron saint of winged feet and dangerous errands,
+Patron saint of winged feet and impossible crossings,
 
 a little machine holding its course past comfort.
 
