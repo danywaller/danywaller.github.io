@@ -4,7 +4,7 @@ collection: publications
 category: conferences
 permalink: /publication/2024-12-01-Designing-a-Network-of-Environmental-Monitoring-Stations-to-Combine-Lunar-Geophysics-and-Space-Weather-Investigations
 date: "2024-12-01"
-publication_date: "December 2024"
+publication_date: "9-13 December 2024"
 author_summary: '<strong>Dany Waller</strong>, Katherine L. Rorschach, Abigail M. Stautberg, et al.'
 venue: 'In the proceedings of AGU Fall Meeting Abstracts'
 paperurl: 'https://agu.confex.com/agu/agu24/meetingapp.cgi/Paper/1680202'
