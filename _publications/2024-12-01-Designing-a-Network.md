@@ -9,5 +9,5 @@ author_summary: '<strong>Dany Waller</strong>, Katherine L. Rorschach, Abigail M
 venue: 'In the proceedings of AGU Fall Meeting Abstracts'
 paperurl: 'https://agu.confex.com/agu/agu24/meetingapp.cgi/Paper/1680202'
 external_url: 'https://agu.confex.com/agu/agu24/meetingapp.cgi/Paper/1680202'
-citation: 'Dany Waller,  Katherine L. Rorschach,  Abigail M. Stautberg,  Joshua T. Cahill,  Kris Izquierdo,  Evan Shea, &quot;Designing a Network of Environmental Monitoring Stations to Combine Lunar Geophysics and Space Weather Investigations.&quot; In the proceedings of AGU Fall Meeting Abstracts, 2024.'
+citation: 'Dany Waller,  Katherine L. Rorschach,  Abigail M. Stautberg,  Joshua T. Cahill,  Kris Izquierdo,  Evan Shea, &quot;Designing a Network of Environmental Monitoring Stations to Combine Lunar Geophysics and Space Weather Investigations.&quot; In the proceedings of AGU Fall Meeting Abstracts, Washington D.C., USA, 9-13 December 2024.'
 ---

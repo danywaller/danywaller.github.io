@@ -9,5 +9,5 @@ author_summary: '<strong>Dany Waller</strong>, Joshua Cahill, Amanda Hendrix, et
 venue: 'In the proceedings of 55th Annual Meeting of the Division for Planetary Sciences'
 paperurl: 'https://baas.aas.org/pub/2023n8i101p03/release/1'
 external_url: 'https://baas.aas.org/pub/2023n8i101p03/release/1'
-citation: 'Dany Waller,  Joshua Cahill,  Amanda Hendrix,  Kurt Retherford,  Karen Stockstill-Cahill, &quot;Analysis of Space Weathering Trends of Lunar Swirls in Highlands and Mare.&quot; In the proceedings of 55th Annual Meeting of the Division for Planetary Sciences, 2023.'
+citation: 'Dany Waller,  Joshua Cahill,  Amanda Hendrix,  Kurt Retherford,  Karen Stockstill-Cahill, &quot;Analysis of Space Weathering Trends of Lunar Swirls in Highlands and Mare.&quot; In the proceedings of 55th Annual Meeting of the Division for Planetary Sciences, San Antonio, Texas, USA, 1-6 October 2023.'
 ---
