@@ -2,7 +2,7 @@
 title: 'The Magnetometer Family Tree'
 excerpt: 'A history of spacecraft magnetometers, tracing missions, sensor types, and boom designs from early lunar exploration to modern planetary missions.'
 date: 2026-10-05
-modified: "2026-10-05T19:34:07+02:00"
+modified: "2026-10-05T19:59:39+02:00"
 permalink: /posts/2026/10/mag-family-tree/
 tags:
   - magnetometers
@@ -39,6 +39,16 @@ Vector and scalar describe what a magnetometer measures and the instrument type 
 - **Overhauser magnetometers** also measure proton-precession frequency, but use radio waves and special molecules to transfer magnetic alignment from electrons to protons. This strengthens the proton signal without needing the strong magnetic pulse used by a conventional proton-precession instrument. The result is still a scalar measurement.
 
 - **Optically pumped magnetometers** use light to prepare atoms in a vapor, such as cesium, potassium, or helium, so their magnetic moments respond together. The instrument detects a magnetic resonance through changes in the light passing through the vapor. The resonance frequency tells us the total field strength. Some designs can also recover vector components by applying known magnetic fields and observing how the measurement changes.
+
+# The Lost Art of Making Ring Cores
+
+Some branches of the magnetometer family tree share the same stock of magnetic material. Many fluxgate sensors use a ring core made from thin ferromagnetic foil, whose intrinsic magnetic noise limits the instrument's sensitivity.[^miles-2019]
+
+Many instruments have relied on Infinetics S1000 ring cores, which went out of production in 1996. Their manufacturing process grew out of military research in the 1960s and was insufficiently documented to reproduce their performance. Remarkably, virtually all the permalloy used in North American fluxgates appears to have come from a single batch, likely made by the Hamilton Watch Company around 1969. The alloy contained 6% molybdenum, 81.3% nickel, and the remainder iron.[^miles-2019]
+
+The resulting instruments kept working, but the supply of new cores did not keep growing. By 2021, NASA reported that stockpiles were so depleted that some providers were considering dismantling old flight-spare hardware to recover its cores. The manufacturing knowledge had been lost to the civilian community, leaving new missions dependent on a shrinking supply of decades-old components.[^nasa-ring-cores-2021]
+
+Researchers including David Miles and B. Barry Narod published a replacement process: make a new alloy, cold-roll it into foil, insulate it, wind it around a supporting ring, and heat-treat the assembly. Their 2019 study demonstrated new cores with magnetic noise comparable to many legacy S1000 cores, restoring a manufacturing capability needed by future instruments.[^miles-2019]
 
 # Spacecraft Missions
 
@@ -81,7 +91,7 @@ Vector and scalar describe what a magnetometer measures and the instrument type 
 
 Counts refer to sensor heads per spacecraft within the cited investigations, including backup heads.
 
-Giotto's dust shield was designed to protect the spacecraft during its fast encounter with Comet Halley, so an exposed magnetometer boom was included. Both sensors were mounted on the antenna tripod and comparing their readings helped assess interference from the spacecraft's own magnetic fields. Giotto carried two magnetometer sensor heads: the outboard triaxial MAG-1 and the inboard biaxial MAG-4. MAG-2 was the electronics box. The instrument paper's hardware inventory does not mention MAG-3, I have not found a satisfying source for why they were named this way.
+Giotto's dust shield was designed to protect the spacecraft during its fast encounter with Comet Halley, so an exposed magnetometer boom was not included. Both sensors were mounted on the antenna tripod and comparing their readings helped assess interference from the spacecraft's own magnetic fields. Giotto carried two magnetometer sensor heads: the outboard triaxial MAG-1 and the inboard biaxial MAG-4. MAG-2 was the electronics box. The instrument paper's hardware inventory does not mention MAG-3, I have not found a satisfying source for why they were named this way.
 
 ## References
 
@@ -139,7 +149,11 @@ Giotto's dust shield was designed to protect the spacecraft during its fast enco
 
 [^miller-1979]: Miller, D. C. 1979, The Voyager magnetometer boom, in *The 12th Aerospace Mechanisms Symposium*, NASA-CP-2080 (Moffett Field, CA: NASA Ames Research Center), 51, [NASA proceedings](https://ntrs.nasa.gov/citations/19790013187)
 
+[^miles-2019]: Miles, D. M., Ciurzynski, M., Barona, D., et al. 2019, Low-noise permalloy ring cores for fluxgate magnetometers, *Geosci. Instrum. Method. Data Syst.*, 8, 227, [doi:10.5194/gi-8-227-2019](https://doi.org/10.5194/gi-8-227-2019)
+
 [^nasa-luna-1]: NASA Space Science Data Coordinated Archive n.d., Luna 1, spacecraft record 1959-012A (Greenbelt, MD: NASA GSFC), accessed 2026 October 5, [mission record](https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1959-012A)
+
+[^nasa-ring-cores-2021]: NASA Science Editorial Team 2021, Rediscovering the Lost Art of Fluxgate Magnetometer Cores, July 6, [NASA technology highlight](https://science.nasa.gov/science-research/science-enabling-technology/technology-highlights/rediscovering-the-lost-art-of-fluxgate-magnetometer-cores/)
 
 [^ness-1967]: Ness, N. F., Behannon, K. W., Scearce, C. S., & Cantarano, S. C. 1967, Early results from the magnetic field experiment on lunar Explorer 35, *J. Geophys. Res.*, 72, 5769, [doi:10.1029/jz072i023p05769](https://doi.org/10.1029/jz072i023p05769)
 

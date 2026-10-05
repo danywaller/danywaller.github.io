@@ -81,6 +81,20 @@ If you are running on Linux, you may also need:
 sudo apt install build-essential gcc make
 ```
 
+## Publishing to GitHub Pages
+
+The site is built by `.github/workflows/deploy_pages.yml` using Ruby 3.1 and the dependencies in `Gemfile.lock`, then uploaded to GitHub Pages. This lets the build install the site's additional gems instead of relying on GitHub Pages' built-in Jekyll environment.
+
+To enable publishing:
+
+1. Commit and push the workflow and `Gemfile.lock` to `master`.
+1. In the repository's **Settings → Pages → Build and deployment**, set **Source** to **GitHub Actions**.
+1. Open **Actions → Build and deploy Jekyll site** and run the workflow if the initial push happened before changing the source.
+
+Later pushes to `master` automatically build and deploy the site. Build errors and deployment status appear in the Actions run.
+
+Keep `Gemfile.lock` in version control so local previews and GitHub Actions install the same gem versions. After changing dependencies, run `bundle install` and commit both `Gemfile` and `Gemfile.lock`.
+
 ## Using Docker
 
 If you prefer not to install local Ruby dependencies, you can use the provided `Dockerfile` and `docker-compose.yaml`:
