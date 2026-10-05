@@ -1,0 +1,15 @@
+---
+title: "Instrument Genealogy"
+excerpt: "A collection of blog posts tracing the history and design lineages of geophysical instruments, starting with magnetometers."
+collection: portfolio
+permalink: /portfolio/instrument-genealogy/
+---
+
+<p>I am collecting the histories and design lineages of geophysical instruments, starting with magnetometers.</p>
+
+{% assign genealogy_posts = site.tags['instrument genealogy'] %}
+{% for post in genealogy_posts %}
+  {% include archive-single.html %}
+{% else %}
+  <p>Instrument histories are coming soon.</p>
+{% endfor %}
