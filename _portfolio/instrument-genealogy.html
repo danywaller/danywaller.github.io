@@ -1,13 +1,13 @@
 ---
 title: "Instrument Genealogy"
-excerpt: "A collection of blog posts tracing the history and design lineages of geophysical instruments, starting with magnetometers."
+excerpt: "A collection of blog posts tracing the history, development, and design lineages of scientific instruments."
 collection: portfolio
 permalink: /portfolio/instrument-genealogy/
 ---
 
-<p>I am collecting the histories and design lineages of geophysical instruments, starting with magnetometers.</p>
+<p>A collection of posts about the history, development, and design lineages of scientific instruments.</p>
 
-{% assign genealogy_posts = site.tags['instrument genealogy'] %}
+{% assign genealogy_posts = site.tags['instrument genealogy'] | sort: 'modified' | reverse %}
 {% for post in genealogy_posts %}
   {% include archive-single.html %}
 {% else %}

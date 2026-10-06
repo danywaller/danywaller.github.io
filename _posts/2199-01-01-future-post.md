@@ -1,7 +1,7 @@
 ---
 title: 'Future Blog Post'
-date: 2199-01-01
-permalink: /posts/2012/08/blog-post-4/
+modified: "2026-10-06T06:15:33+00:00"
+permalink: /posts/future-post/
 published: false
 sitemap: false
 tags:

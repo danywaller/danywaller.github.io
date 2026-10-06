@@ -1,9 +1,8 @@
 ---
 title: 'The Magnetometer Family Tree'
 excerpt: 'A history of spacecraft magnetometers, tracing missions, sensor types, and boom designs from early lunar exploration to modern planetary missions.'
-date: 2026-10-05
-modified: "2026-10-05T19:59:39+02:00"
-permalink: /posts/2026/10/mag-family-tree/
+modified: "2026-10-06T06:15:33+00:00"
+permalink: /posts/mag-family-tree/
 tags:
   - magnetometers
   - instrument genealogy
@@ -52,7 +51,7 @@ Researchers including David Miles and B. Barry Narod published a replacement pro
 
 # Spacecraft Missions
 
-> **Authors Note:** Boom lengths are hand-wavey! In some cases, the reported value is the approximate distance between the magnetometer sensor and the spacecraft center rather than the physical boom length.
+> **Author's Note:** Boom lengths are hand-wavey! In some cases, the reported value is the approximate distance between the magnetometer sensor and the spacecraft center rather than the physical boom length.
 
 | Mission | Target / environment | Launch year | Number and type | Boom length / location |
 |---|---|---:|---|---|
@@ -76,7 +75,7 @@ Researchers including David Miles and B. Barry Narod published a replacement pro
 | Cluster[^balogh-2001]<sup>,</sup>[^cornilleau-wehrlin-1997] | Geospace | 2000 | 3: 2 triaxial fluxgates (FGM) + 1 triaxial search-coil (STAFF) | 5 m radial booms: FGM and STAFF on opposite booms |
 | MESSENGER[^anderson-2007] | Mercury orbit | 2004 | 1 triaxial fluxgate | 3.6 m |
 | THEMIS[^auster-2008]<sup>,</sup>[^roux-2008] | Geospace / Lunar orbit | 2007 | 2: 1 triaxial fluxgate (FGM) + 1 triaxial search-coil (SCM) | 1.2 m FGM; 1 m SCM |
-| SELENE/Kaguya[^shimizu-2008]<sup>,</sup>[^takahashi-2009] | Lunar orbit | 2007 | 1 triaxial fluxgate | 12 m |
+| SELENE/Kaguya[^shimizu-2008]<sup>,</sup>[^takahashi-2009] | Lunar orbit | 2007 | 1 triaxial ring-core fluxgate (LMAG) | 12 m mast |
 | Juno[^connerney-2017] | Jupiter orbit | 2011 | 2 triaxial fluxgates | \\(\sim 10\\)–\\(12\\) m solar-array boom |
 | MAVEN[^connerney-2015] | Mars orbit | 2013 | 2 triaxial fluxgates | 0.66 m boomlets; sensors \\(\sim 5.6\\) m from center |
 | Swarm[^friis-christensen-2008]<sup>,</sup>[^leger-2015] | Earth orbit | 2013 | 3: 1 triaxial fluxgate + 2 scalar helium (primary + backup) | 4.3 m |
@@ -89,9 +88,9 @@ Researchers including David Miles and B. Barry Narod published a replacement pro
 | JUICE[^grasset-2013]<sup>,</sup>[^esa-2023] | Jupiter system | 2023 | 3: 2 triaxial fluxgates + 1 scalar rubidium | 10.6 m |
 | Europa Clipper[^kivelson-2023] | Jovian system / Europa | 2024 | 3 triaxial fluxgates | 7.9–8.5 m |
 
-Counts refer to sensor heads per spacecraft within the cited investigations, including backup heads.
-
 Giotto's dust shield was designed to protect the spacecraft during its fast encounter with Comet Halley, so an exposed magnetometer boom was not included. Both sensors were mounted on the antenna tripod and comparing their readings helped assess interference from the spacecraft's own magnetic fields. Giotto carried two magnetometer sensor heads: the outboard triaxial MAG-1 and the inboard biaxial MAG-4. MAG-2 was the electronics box. The instrument paper's hardware inventory does not mention MAG-3, I have not found a satisfying source for why they were named this way.
+
+SELENE/Kaguya's LMAG also had sensor alignment monitor coils (SAM-C), mounted at the mast base, which generated known magnetic fields for calibration.[^shimizu-2008]<sup>,</sup>[^takahashi-2009]
 
 ## References
 

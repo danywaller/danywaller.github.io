@@ -12,6 +12,7 @@ This repository began as an [Academic Pages](https://academicpages.github.io/) s
 - `markdown_generator/` contains the BibTeX-driven publication generators, including both notebook and script workflows.
 - `_data/cv.json` is used across the CV page and derived content such as the career map.
 - `scripts/` contains repo-specific utilities for syncing and maintaining generated content.
+- `docs/` contains [content maintenance guides](docs/README.md) for posts, poems, portfolio items, publications, and the career map.
 
 ## Running locally
 

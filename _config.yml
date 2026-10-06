@@ -173,6 +173,7 @@ exclude:
   - assets/js/_main.js
   - assets/js/plugins
   - assets/js/vendor
+  - docs
   - CHANGELOG
   - Capfile
   - config
@@ -240,6 +241,7 @@ defaults:
       type: posts
     values:
       layout: single
+      permalink: /posts/:title/
       author_profile: true
       read_time: true
       comments: true
