@@ -3,6 +3,8 @@ title: 'The Magnetometer Family Tree'
 excerpt: 'A history of spacecraft magnetometers, tracing missions, sensor types, and boom designs from early lunar exploration to modern planetary missions.'
 modified: "2026-10-06T06:15:33+00:00"
 permalink: /posts/mag-family-tree/
+redirect_from:
+  - /posts/2026/10/mag-family-tree/
 tags:
   - magnetometers
   - instrument genealogy
