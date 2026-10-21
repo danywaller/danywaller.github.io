@@ -9,6 +9,8 @@
 
 The map reads `education` and `work` entries with a nonempty `address`. Entries sharing an identical address are grouped into one blue marker. Field work sites are a separate list in the map page and use purple markers.
 
+The basemap uses standard OpenStreetMap tiles and requires no API key. Its tile URL, maximum zoom, and visible attribution are configured in `_pages/careermap-map.html`.
+
 ## Add or edit a work or education location
 
 Add an entry to the appropriate array in `_data/cv.json`, or add an `address` to an existing entry. A work entry follows this shape:
