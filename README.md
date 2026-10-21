@@ -92,6 +92,8 @@ To enable publishing:
 1. In the repository's **Settings → Pages → Build and deployment**, set **Source** to **GitHub Actions**.
 1. Open **Actions → Build and deploy Jekyll site** and run the workflow if the initial push happened before changing the source.
 
+Use the existing **Build and deploy Jekyll site** workflow after selecting GitHub Actions as the source. It already handles building and publishing; adding GitHub's suggested Jekyll workflow creates a second publisher for the same site.
+
 Later pushes to `master` automatically build and deploy the site. Build errors and deployment status appear in the Actions run.
 
 Keep `Gemfile.lock` in version control so local previews and GitHub Actions install the same gem versions. After changing dependencies, run `bundle install` and commit both `Gemfile` and `Gemfile.lock`.
